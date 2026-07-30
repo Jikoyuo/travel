@@ -187,13 +187,24 @@ function getImageUrl(img) {
     updateGrid();
   });
 
-  // Client-side Realtime Fetching & Polling from Sanity API (every 5s)
+  function deduplicateDrafts(items: any[]) {
+    const map = new Map();
+    items.forEach(item => {
+      const cleanId = item._id.replace(/^drafts\./, '');
+      const isDraft = item._id.startsWith('drafts.');
+      if (!map.has(cleanId) || isDraft) {
+        map.set(cleanId, item);
+      }
+    });
+    return Array.from(map.values());
+  }
+
   async function fetchRealtimeTours() {
     try {
-      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "tour" && !(_id in path("drafts.**"))]{_id,name,category,price,originalPrice,rating,reviews,badge,duration,"image":select(defined(image.asset)=>image.asset->url,defined(imageUrl)=>imageUrl,null),description}');
+      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "tour"]{_id,name,category,price,originalPrice,rating,reviews,badge,duration,"image":select(defined(image.asset)=>image.asset->url,defined(imageUrl)=>imageUrl,null),description}');
       const json = await res.json();
       if (json && json.result && Array.isArray(json.result) && json.result.length > 0) {
-        renderTours(json.result);
+        renderTours(deduplicateDrafts(json.result));
       }
     } catch (e) {
       console.warn('Realtime fetch warning:', e);
