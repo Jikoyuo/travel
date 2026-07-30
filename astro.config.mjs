@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://travel-jet-nu.vercel.app',
   integrations: [
     sanity({
-      projectId: env.PUBLIC_SANITY_PROJECT_ID || process.env.PUBLIC_SANITY_PROJECT_ID || 'dummyid123',
+      projectId: env.PUBLIC_SANITY_PROJECT_ID || process.env.PUBLIC_SANITY_PROJECT_ID || 'swt686hz',
       dataset: env.PUBLIC_SANITY_DATASET || process.env.PUBLIC_SANITY_DATASET || 'production',
       useCdn: false,
       studioBasePath: '/admin',
@@ -18,4 +18,9 @@ export default defineConfig({
     react(),
     sitemap(),
   ],
+  vite: {
+    optimizeDeps: {
+      include: ['styled-components'],
+    },
+  },
 });
