@@ -20,7 +20,7 @@ export default defineConfig({
   ],
   vite: {
     optimizeDeps: {
-      include: ['styled-components'],
+      exclude: ['styled-components'],
     },
   },
 });
