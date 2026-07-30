@@ -21,7 +21,7 @@ const jsonLdData = JSON.stringify({
   "name": "Jogja Discovery — Tour Guide Yogyakarta",
   "image": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1200&q=80",
   "description": "Premier tour guide service and travel agency in Yogyakarta, Indonesia. Specialized in Borobudur sunrise, Prambanan sunset, Jomblang cave, and Javanese cultural heritage tours.",
-  "url": "https://jogja-discovery.com",
+  "url": "https://travel-jet-nu.vercel.app",
   "telephone": "+62-857-4321-0987",
   "email": "hello@jogja-discovery.com",
   "address": {
@@ -101,29 +101,30 @@ const jsonLdData = JSON.stringify({
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Asynchronous Non-Render-Blocking Google Fonts Loading -->
+    <!-- Preconnect Font Domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fast Asynchronous Font Stylesheet -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       media="print"
-      is:inline
+      onload="this.media='all'"
     />
-    <script is:inline>
-      const gfont = document.querySelector('link[href*="fonts.googleapis.com"][media="print"]');
-      if (gfont) {
-        gfont.addEventListener('load', function() { this.media = 'all'; });
-        setTimeout(function() { gfont.media = 'all'; }, 100);
-      }
-    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
 
     <!-- Ultra-Light Responsive Hero Image Preload -->
     <link
       rel="preload"
       as="image"
-      imagesrcset="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=480&q=60 480w, https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=1000&q=70 1000w"
-      imagesizes="(max-width: 768px) 100vw, 1000px"
+      imagesrcset="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=400&q=50 400w, https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=900&q=65 900w"
+      imagesizes="(max-width: 768px) 100vw, 900px"
     />
 
     <!-- JSON-LD Structured Data -->
