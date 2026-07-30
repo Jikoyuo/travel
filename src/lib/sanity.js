@@ -48,7 +48,65 @@ export async function getToursFromSanity() {
       image: item.image || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=500&q=70',
     }));
   } catch (error) {
-    console.error('Sanity fetch error:', error);
+    console.error('Sanity tours fetch error:', error);
     return [];
+  }
+}
+
+export async function getCategoriesFromSanity() {
+  try {
+    const query = `*[_type == "category"] {
+      _id,
+      name,
+      nameEn,
+      description,
+      icon,
+      count,
+      "image": select(
+        defined(image.asset) => image.asset->url,
+        defined(imageUrl) => imageUrl,
+        null
+      )
+    }`;
+    const data = await sanityClient.fetch(query);
+    if (!data || !Array.isArray(data) || data.length === 0) return null;
+    return data.map((item, index) => ({
+      id: item._id || index + 1,
+      name: item.name,
+      nameEn: item.nameEn || '',
+      description: item.description || '',
+      icon: item.icon || 'temple',
+      count: item.count || 0,
+      image: item.image || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=600&q=70',
+    }));
+  } catch (error) {
+    console.error('Sanity categories fetch error:', error);
+    return null;
+  }
+}
+
+export async function getTestimonialsFromSanity() {
+  try {
+    const query = `*[_type == "testimonial"] {
+      _id,
+      name,
+      role,
+      avatar,
+      quote,
+      rating
+    }`;
+    const data = await sanityClient.fetch(query);
+    if (!data || !Array.isArray(data) || data.length === 0) return null;
+    return data.map((item, index) => ({
+      id: item._id || index + 1,
+      name: item.name,
+      role: item.role || 'Traveler',
+      avatar: item.avatar || `https://i.pravatar.cc/150?img=${index + 10}`,
+      quote: item.quote,
+      rating: item.rating || 5,
+    }));
+  } catch (error) {
+    console.error('Sanity testimonials fetch error:', error);
+    return null;
   }
 }

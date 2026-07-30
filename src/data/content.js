@@ -1,8 +1,8 @@
 
 
-import { getToursFromSanity } from '../lib/sanity.js';
+import { getToursFromSanity, getCategoriesFromSanity, getTestimonialsFromSanity } from '../lib/sanity.js';
 
-export const categories = [
+const defaultCategories = [
   {
     id: 1,
     name: "Temple Tours",
@@ -65,11 +65,12 @@ export const categories = [
     description:
       "Guided photography sessions at the most stunning and photogenic locations",
     icon: "camera",
-    image:
-      "https://images.unsplash.com/photo-1600100397608-e4b1e7e70afa?auto=format&fm=webp&fit=crop&w=600&q=70",
     count: 8,
   },
 ];
+
+const sanityCategories = await getCategoriesFromSanity();
+export const categories = (sanityCategories && sanityCategories.length > 0) ? sanityCategories : defaultCategories;
 
 const defaultTours = [
   {
@@ -350,7 +351,7 @@ export const features = [
   },
 ];
 
-export const testimonials = [
+const defaultTestimonials = [
   {
     id: 1,
     name: "Sarah Mitchell",
@@ -452,6 +453,9 @@ export const testimonials = [
     tripCount: 5,
   },
 ];
+
+const sanityTestimonials = await getTestimonialsFromSanity();
+export const testimonials = (sanityTestimonials && sanityTestimonials.length > 0) ? sanityTestimonials : defaultTestimonials;
 
 export const companyInfo = {
   name: import.meta.env.PUBLIC_COMPANY_NAME || "Jogja Discovery",
