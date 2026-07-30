@@ -100,7 +100,6 @@ const initialLabel = selectedOption ? selectedOption.label : placeholder;
       const nativeSelect = container.querySelector('.custom-select__native') as HTMLSelectElement;
       const triggerBtn = container.querySelector('.custom-select__trigger') as HTMLButtonElement;
       const valueSpan = container.querySelector('.custom-select__value') as HTMLElement;
-      const dropdown = container.querySelector('.custom-select__dropdown') as HTMLElement;
       const options = container.querySelectorAll('.custom-select__option');
 
       function open() {
@@ -211,7 +210,7 @@ const initialLabel = selectedOption ? selectedOption.label : placeholder;
 }
 
 .custom-select.is-open {
-  z-index: 999;
+  z-index: 9999;
 }
 
 .custom-select__native {
@@ -286,10 +285,9 @@ const initialLabel = selectedOption ? selectedOption.label : placeholder;
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  min-width: 100%;
-  width: max-content;
-  max-width: 320px;
-  z-index: 9999;
+  width: 100%;
+  min-width: 180px;
+  z-index: 99999;
   background: #FFFFFF;
   border: 1px solid rgba(45,80,22,0.15);
   border-radius: 14px;
@@ -297,6 +295,7 @@ const initialLabel = selectedOption ? selectedOption.label : placeholder;
   padding: 6px;
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transform: translateY(-8px) scale(0.98);
   transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
 }
@@ -304,6 +303,15 @@ const initialLabel = selectedOption ? selectedOption.label : placeholder;
 .custom-select--align-right .custom-select__dropdown {
   left: auto;
   right: 0;
+  width: max-content;
+  min-width: 190px;
+}
+
+.custom-select.is-open .custom-select__dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 .custom-select__options {
