@@ -151,7 +151,8 @@ import { testimonials } from '../../data/content.js';
   // Realtime polling for Sanity Testimonials (every 3s)
   async function fetchRealtimeTestimonials() {
     try {
-      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "testimonial" && !(_id in path("drafts.**"))]{_id,name,role,avatar,quote,rating}');
+      const groq = '*[_type == "testimonial" && !(_id in path("drafts.**"))]{_id,name,role,avatar,quote,rating}';
+      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=' + encodeURIComponent(groq));
       const json = await res.json();
       if (json && json.result && Array.isArray(json.result)) {
         renderTestimonials(json.result);

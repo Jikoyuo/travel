@@ -189,7 +189,8 @@ function getImageUrl(img) {
 
   async function fetchRealtimeTours() {
     try {
-      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "tour" && !(_id in path("drafts.**"))]{_id,name,category,price,originalPrice,rating,reviews,badge,duration,"image":select(defined(image.asset)=>image.asset->url,defined(imageUrl)=>imageUrl,null),description}');
+      const groq = '*[_type == "tour" && !(_id in path("drafts.**"))]{_id,name,category,price,originalPrice,rating,reviews,badge,duration,"image":select(defined(image.asset)=>image.asset->url,defined(imageUrl)=>imageUrl,null),description}';
+      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=' + encodeURIComponent(groq));
       const json = await res.json();
       if (json && json.result && Array.isArray(json.result) && json.result.length > 0) {
         renderTours(json.result);
