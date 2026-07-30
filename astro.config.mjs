@@ -19,7 +19,7 @@ export default defineConfig({
   ],
   vite: {
     optimizeDeps: {
-      exclude: ['styled-components'],
+      exclude: ['sanity', '@sanity/astro', '@sanity/client', 'styled-components'],
     },
   },
 });
