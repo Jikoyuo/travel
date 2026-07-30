@@ -16,7 +16,7 @@ export function urlFor(source) {
 
 export async function getToursFromSanity() {
   try {
-    const query = `*[_type == "tour"] {
+    const query = `*[_type == "tour" && !(_id in path("drafts.**"))] {
       _id,
       name,
       category,
@@ -55,7 +55,7 @@ export async function getToursFromSanity() {
 
 export async function getCategoriesFromSanity() {
   try {
-    const query = `*[_type == "category"] {
+    const query = `*[_type == "category" && !(_id in path("drafts.**"))] {
       _id,
       name,
       nameEn,
