@@ -6,7 +6,7 @@ export default defineConfig({
   name: 'default',
   title: 'Jogja Discovery Backoffice',
 
-  projectId: process.env.PUBLIC_SANITY_PROJECT_ID || 'dummy_id',
+  projectId: process.env.PUBLIC_SANITY_PROJECT_ID || 'dummyid123',
   dataset: process.env.PUBLIC_SANITY_DATASET || 'production',
 
   plugins: [structureTool()],

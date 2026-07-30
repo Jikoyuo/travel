@@ -9,6 +9,11 @@ export function urlFor(source) {
 }
 
 export async function getToursFromSanity() {
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+  if (!projectId || projectId === 'dummyid123') {
+    return null; // Return null so content.js uses default static tours seamlessly
+  }
+
   try {
     const query = `*[_type == "tour"] | order(_createdAt desc) {
       "id": _id,
