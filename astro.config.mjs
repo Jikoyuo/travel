@@ -18,8 +18,8 @@ export default defineConfig({
     sitemap(),
   ],
   vite: {
-    optimizeDeps: {
-      exclude: ['sanity', '@sanity/astro', '@sanity/client', 'styled-components'],
+    ssr: {
+      noExternal: ['styled-components'],
     },
   },
 });
