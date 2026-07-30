@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+import createImageUrlBuilder from '@sanity/image-url';
 
 export const sanityClient = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'swt686hz',
@@ -8,7 +8,7 @@ export const sanityClient = createClient({
   useCdn: false,
 });
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
 export function urlFor(source) {
   return builder.image(source);
