@@ -10,16 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.2",
     "@astrojs/sitemap": "^3.3.1",
-    "@sanity/astro": "^3.5.0",
-    "@sanity/client": "^7.25.0",
-    "@sanity/image-url": "^2.1.1",
     "astro": "^5.10.2",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "sanity": "^3.99.0",
-    "styled-components": "^6.4.4"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
