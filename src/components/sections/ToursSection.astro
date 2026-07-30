@@ -90,7 +90,7 @@ function getImageUrl(img) {
               <div class="tour-card__footer">
                 <div class="tour-card__pricing">
                   <span class="tour-card__price">${tour.price}<span class="tour-card__per">/person</span></span>
-                  {tour.originalPrice && (
+                  {tour.originalPrice && Number(tour.originalPrice) > Number(tour.price) && (
                     <span class="tour-card__original">${tour.originalPrice}</span>
                   )}
                 </div>
@@ -216,7 +216,7 @@ function getImageUrl(img) {
     grid.innerHTML = toursList.map((tour, index) => {
       const imgUrl = tour.image ? (tour.image.includes('?') ? `${tour.image}&auto=format&fit=crop&w=500&q=75` : `${tour.image}?auto=format&fit=crop&w=500&q=75`) : 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=500&q=75';
       const badgeHtml = tour.badge ? `<div class="tour-card__badge" data-badge-type="${tour.badge.toLowerCase().replace(/\s+/g, '-')}">${tour.badge}</div>` : '';
-      const origPriceHtml = tour.originalPrice ? `<span class="tour-card__original">$${tour.originalPrice}</span>` : '';
+      const origPriceHtml = (tour.originalPrice && Number(tour.originalPrice) > Number(tour.price)) ? `<span class="tour-card__original">$${tour.originalPrice}</span>` : '';
 
       return `
         <div

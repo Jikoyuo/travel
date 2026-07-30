@@ -17,7 +17,7 @@ import { testimonials } from '../../data/content.js';
         {testimonials.map((testimonial) => (
           <article class="testimonial-card">
             <div class="rating-row">
-              {Array.from({ length: testimonial.rating }).map(() => (
+              {Array.from({ length: testimonial.rating || 5 }).map(() => (
                 <svg class="star-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
@@ -25,23 +25,21 @@ import { testimonials } from '../../data/content.js';
             </div>
             <blockquote class="quote">"{testimonial.quote}"</blockquote>
             <footer class="card-footer">
-              <img src={testimonial.avatar} alt={`${testimonial.name} - Tour Guide Yogyakarta Review`} class="avatar" loading="lazy" decoding="async" width="48" height="48" />
+              <img src={testimonial.avatar || 'https://i.pravatar.cc/150'} alt={`${testimonial.name} - Tour Guide Yogyakarta Review`} class="avatar" loading="lazy" decoding="async" width="48" height="48" />
               <div class="author-info">
                 <p class="author-name">{testimonial.name}</p>
                 <p class="author-role">{testimonial.role}</p>
-                <p class="trip-count">
-                  <svg class="trip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 17l4-8 4 4 4-6 4 10"/><path d="M3 21h18"/>
-                  </svg>
-                  {testimonial.tripCount} trips
-                </p>
               </div>
             </footer>
           </article>
         ))}
       </div>
 
-      <div class="carousel-controls">
+      <div class="testimonials-empty" id="testimonials-empty" style={testimonials.length === 0 ? '' : 'display:none;'}>
+        <p>No traveler reviews published yet in Sanity CMS.</p>
+      </div>
+
+      <div class="carousel-controls" id="carousel-controls" style={testimonials.length > 0 ? '' : 'display:none;'}>
         <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous testimonial review">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         </button>
@@ -59,13 +57,25 @@ import { testimonials } from '../../data/content.js';
   const prevBtn = document.getElementById('carousel-prev');
   const nextBtn = document.getElementById('carousel-next');
   const dotsWrap = document.getElementById('carousel-dots');
-  const cards = track?.querySelectorAll('.testimonial-card');
+  const emptyState = document.getElementById('testimonials-empty');
+  const controlsWrap = document.getElementById('carousel-controls');
 
-  if (track && cards && dotsWrap) {
+  let current = 0;
+  let autoplayTimer: number;
+  let isHovering = false;
+
+  function initCarousel() {
+    const cards = track?.querySelectorAll('.testimonial-card');
+    if (!track || !cards || cards.length === 0) {
+      if (emptyState) emptyState.style.display = '';
+      if (controlsWrap) controlsWrap.style.display = 'none';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (controlsWrap) controlsWrap.style.display = 'flex';
+
     const total = cards.length;
-    let current = 0;
-    let autoplayTimer: number;
-    let isHovering = false;
 
     function getCardsPerView() {
       if (window.innerWidth >= 1024) return 3;
@@ -77,8 +87,8 @@ import { testimonials } from '../../data/content.js';
       return Math.max(0, total - getCardsPerView());
     }
 
-    // Build dots
     function buildDots() {
+      if (!dotsWrap) return;
       dotsWrap.innerHTML = '';
       const maxIdx = getMaxIndex();
       for (let i = 0; i <= maxIdx; i++) {
@@ -94,6 +104,7 @@ import { testimonials } from '../../data/content.js';
     }
 
     function updateDots() {
+      if (!dotsWrap) return;
       const dots = dotsWrap.querySelectorAll('.carousel-dot');
       dots.forEach((dot, i) => {
         dot.classList.toggle('carousel-dot--active', i === current);
@@ -104,6 +115,7 @@ import { testimonials } from '../../data/content.js';
       const maxIdx = getMaxIndex();
       current = Math.max(0, Math.min(index, maxIdx));
       const card = cards[0] as HTMLElement;
+      if (!card) return;
       const cardWidth = card.offsetWidth;
       const gap = parseInt(getComputedStyle(track).gap) || 20;
       track.style.transform = `translateX(-${current * (cardWidth + gap)}px)`;
@@ -124,20 +136,69 @@ import { testimonials } from '../../data/content.js';
       clearInterval(autoplayTimer);
     }
 
-    prevBtn?.addEventListener('click', () => { prev(); startAutoplay(); });
-    nextBtn?.addEventListener('click', () => { next(); startAutoplay(); });
+    if (prevBtn) prevBtn.onclick = () => { prev(); startAutoplay(); };
+    if (nextBtn) nextBtn.onclick = () => { next(); startAutoplay(); };
 
-    track.addEventListener('mouseenter', () => { isHovering = true; });
-    track.addEventListener('mouseleave', () => { isHovering = false; });
-
-    window.addEventListener('resize', () => {
-      buildDots();
-      goTo(Math.min(current, getMaxIndex()));
-    });
+    if (track) {
+      track.onmouseenter = () => { isHovering = true; };
+      track.onmouseleave = () => { isHovering = false; };
+    }
 
     buildDots();
     startAutoplay();
   }
+
+  // Realtime polling for Sanity Testimonials (every 3s)
+  async function fetchRealtimeTestimonials() {
+    try {
+      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "testimonial" && !(_id in path("drafts.**"))]{_id,name,role,avatar,quote,rating}');
+      const json = await res.json();
+      if (json && json.result && Array.isArray(json.result)) {
+        renderTestimonials(json.result);
+      }
+    } catch (e) {
+      console.warn('Realtime testimonials fetch warning:', e);
+    }
+  }
+
+  function renderTestimonials(list: any[]) {
+    if (!track) return;
+
+    if (list.length === 0) {
+      track.innerHTML = '';
+      if (emptyState) emptyState.style.display = '';
+      if (controlsWrap) controlsWrap.style.display = 'none';
+      return;
+    }
+
+    track.innerHTML = list.map((item, idx) => {
+      const stars = Array.from({ length: item.rating || 5 }).map(() => `
+        <svg class="star-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      `).join('');
+
+      return `
+        <article class="testimonial-card">
+          <div class="rating-row">${stars}</div>
+          <blockquote class="quote">"${item.quote || ''}"</blockquote>
+          <footer class="card-footer">
+            <img src="${item.avatar || `https://i.pravatar.cc/150?img=${idx + 10}`}" alt="${item.name || ''} - Tour Guide Yogyakarta Review" class="avatar" loading="lazy" decoding="async" width="48" height="48" />
+            <div class="author-info">
+              <p class="author-name">${item.name || ''}</p>
+              <p class="author-role">${item.role || 'Traveler'}</p>
+            </div>
+          </footer>
+        </article>
+      `;
+    }).join('');
+
+    initCarousel();
+  }
+
+  fetchRealtimeTestimonials();
+  setInterval(fetchRealtimeTestimonials, 3000);
+  initCarousel();
 
   // Reveal
   const section = document.getElementById('testimonials');
@@ -199,6 +260,13 @@ import { testimonials } from '../../data/content.js';
   gap: 20px;
   transition: transform 0.5s var(--ease);
   will-change: transform;
+}
+
+.testimonials-empty {
+  text-align: center;
+  padding: 48px 0;
+  color: #777;
+  font-size: 0.95rem;
 }
 
 .testimonial-card {
@@ -274,18 +342,6 @@ import { testimonials } from '../../data/content.js';
   font-size: 0.75rem;
   color: var(--brown);
 }
-
-.trip-count {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--sand);
-}
-
-.trip-icon { width: 12px; height: 12px; flex-shrink: 0; }
 
 /* Carousel Controls */
 .carousel-controls {

@@ -454,8 +454,8 @@ const defaultTestimonials = [
   },
 ];
 
-const sanityTestimonials = await getTestimonialsFromSanity();
-export const testimonials = (sanityTestimonials && sanityTestimonials.length > 0) ? sanityTestimonials : defaultTestimonials;
+// 100% PURE REAL-TIME TESTIMONIALS FROM SANITY CMS
+export const testimonials = await getTestimonialsFromSanity();
 
 export const companyInfo = {
   name: import.meta.env.PUBLIC_COMPANY_NAME || "Jogja Discovery",

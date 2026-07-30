@@ -96,7 +96,7 @@ export async function getTestimonialsFromSanity() {
       rating
     }`;
     const data = await sanityClient.fetch(query);
-    if (!data || !Array.isArray(data) || data.length === 0) return null;
+    if (!data || !Array.isArray(data)) return [];
     return data.map((item, index) => ({
       id: item._id || index + 1,
       name: item.name,
@@ -107,6 +107,6 @@ export async function getTestimonialsFromSanity() {
     }));
   } catch (error) {
     console.error('Sanity testimonials fetch error:', error);
-    return null;
+    return [];
   }
 }
