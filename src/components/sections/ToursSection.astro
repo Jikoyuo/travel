@@ -36,6 +36,7 @@ const sortOptions = [
             id="sort-select"
             defaultValue="default"
             options={sortOptions}
+            alignRight={true}
             className="sort-select-custom"
           />
         </div>
@@ -200,6 +201,8 @@ const sortOptions = [
 }
 
 .products-section__header {
+  position: relative;
+  z-index: 40;
   margin-bottom: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -213,6 +216,8 @@ const sortOptions = [
 }
 
 .products-section__controls {
+  position: relative;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -257,6 +262,8 @@ const sortOptions = [
 }
 
 .sort-wrap {
+  position: relative;
+  z-index: 40;
   display: flex;
   align-items: center;
   gap: 8px;
