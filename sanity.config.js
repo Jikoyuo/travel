@@ -2,12 +2,15 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { schemaTypes } from './schemaTypes/index.js';
 
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || (typeof process !== 'undefined' ? process.env.PUBLIC_SANITY_PROJECT_ID : '') || 'dummyid123';
+const dataset = import.meta.env.PUBLIC_SANITY_DATASET || (typeof process !== 'undefined' ? process.env.PUBLIC_SANITY_DATASET : '') || 'production';
+
 export default defineConfig({
   name: 'default',
   title: 'Jogja Discovery Backoffice',
 
-  projectId: process.env.PUBLIC_SANITY_PROJECT_ID || 'dummyid123',
-  dataset: process.env.PUBLIC_SANITY_DATASET || 'production',
+  projectId,
+  dataset,
 
   plugins: [structureTool()],
 
