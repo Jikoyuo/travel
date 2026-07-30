@@ -14,22 +14,9 @@ export function urlFor(source) {
   return builder.image(source);
 }
 
-function deduplicateDrafts(items) {
-  if (!items || !Array.isArray(items)) return [];
-  const map = new Map();
-  items.forEach(item => {
-    const cleanId = item._id.replace(/^drafts\./, '');
-    const isDraft = item._id.startsWith('drafts.');
-    if (!map.has(cleanId) || isDraft) {
-      map.set(cleanId, item);
-    }
-  });
-  return Array.from(map.values());
-}
-
 export async function getToursFromSanity() {
   try {
-    const query = `*[_type == "tour"] {
+    const query = `*[_type == "tour" && !(_id in path("drafts.**"))] {
       _id,
       name,
       category,
@@ -46,8 +33,8 @@ export async function getToursFromSanity() {
       ),
       description
     }`;
-    const rawData = await sanityClient.fetch(query);
-    const data = deduplicateDrafts(rawData);
+    const data = await sanityClient.fetch(query);
+    if (!data || !Array.isArray(data)) return [];
     return data.map((item, index) => ({
       id: item._id || index + 1,
       name: item.name,
@@ -68,7 +55,7 @@ export async function getToursFromSanity() {
 
 export async function getCategoriesFromSanity() {
   try {
-    const query = `*[_type == "category"] {
+    const query = `*[_type == "category" && !(_id in path("drafts.**"))] {
       _id,
       name,
       nameEn,
@@ -81,9 +68,8 @@ export async function getCategoriesFromSanity() {
         null
       )
     }`;
-    const rawData = await sanityClient.fetch(query);
-    const data = deduplicateDrafts(rawData);
-    if (data.length === 0) return null;
+    const data = await sanityClient.fetch(query);
+    if (!data || !Array.isArray(data) || data.length === 0) return null;
     return data.map((item, index) => ({
       id: item._id || index + 1,
       name: item.name,
@@ -101,7 +87,7 @@ export async function getCategoriesFromSanity() {
 
 export async function getTestimonialsFromSanity() {
   try {
-    const query = `*[_type == "testimonial"] {
+    const query = `*[_type == "testimonial" && !(_id in path("drafts.**"))] {
       _id,
       name,
       role,
@@ -109,8 +95,8 @@ export async function getTestimonialsFromSanity() {
       quote,
       rating
     }`;
-    const rawData = await sanityClient.fetch(query);
-    const data = deduplicateDrafts(rawData);
+    const data = await sanityClient.fetch(query);
+    if (!data || !Array.isArray(data)) return [];
     return data.map((item, index) => ({
       id: item._id || index + 1,
       name: item.name,

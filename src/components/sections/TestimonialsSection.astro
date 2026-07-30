@@ -148,25 +148,13 @@ import { testimonials } from '../../data/content.js';
     startAutoplay();
   }
 
-  function deduplicateDrafts(items: any[]) {
-    const map = new Map();
-    items.forEach(item => {
-      const cleanId = item._id.replace(/^drafts\./, '');
-      const isDraft = item._id.startsWith('drafts.');
-      if (!map.has(cleanId) || isDraft) {
-        map.set(cleanId, item);
-      }
-    });
-    return Array.from(map.values());
-  }
-
   // Realtime polling for Sanity Testimonials (every 3s)
   async function fetchRealtimeTestimonials() {
     try {
-      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "testimonial"]{_id,name,role,avatar,quote,rating}');
+      const res = await fetch('https://swt686hz.api.sanity.io/v2024-01-01/data/query/production?query=*[_type == "testimonial" && !(_id in path("drafts.**"))]{_id,name,role,avatar,quote,rating}');
       const json = await res.json();
       if (json && json.result && Array.isArray(json.result)) {
-        renderTestimonials(deduplicateDrafts(json.result));
+        renderTestimonials(json.result);
       }
     } catch (e) {
       console.warn('Realtime testimonials fetch warning:', e);
