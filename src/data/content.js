@@ -1,5 +1,5 @@
 // ============================================================
-//  Jogja Discovery — Content Data (Optimized WebP Images)
+//  Jogja Discovery — Content Data (Environment Variable Integrated)
 // ============================================================
 
 export const categories = [
@@ -421,22 +421,22 @@ export const testimonials = [
 ]
 
 export const companyInfo = {
-  name: 'Jogja Discovery',
+  name: import.meta.env.PUBLIC_COMPANY_NAME || 'Jogja Discovery',
   tagline: 'Discover the Soul of Yogyakarta',
   description:
     'Jogja Discovery is a premier tour guide service based in Yogyakarta, Indonesia. Since 2016, we have helped thousands of travelers experience the rich cultural heritage, stunning temples, and natural beauty of the Yogyakarta region.',
-  phone: '+62 857 4321 0987',
-  email: 'hello@jogja-discovery.com',
-  whatsapp: '6285743210987',
-  address: 'Jl. Prawirotaman No. 28, Mergangsan, Yogyakarta 55153',
+  phone: import.meta.env.PUBLIC_COMPANY_PHONE || '+62 896 6447 0000',
+  email: import.meta.env.PUBLIC_COMPANY_EMAIL || 'hello@jogja-discovery.com',
+  whatsapp: import.meta.env.PUBLIC_COMPANY_WHATSAPP || '6289664470000',
+  address: import.meta.env.PUBLIC_COMPANY_ADDRESS || 'Jl. Prawirotaman No. 28, Mergangsan, Yogyakarta 55153',
   coordinates: {
     lat: -7.8099,
     lng: 110.3654,
   },
   socials: {
-    instagram: 'https://instagram.com/jogja.discovery',
-    facebook: 'https://facebook.com/jogja.discovery',
-    tiktok: 'https://tiktok.com/@jogja.discovery',
+    instagram: import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://instagram.com/jogja.discovery',
+    facebook: import.meta.env.PUBLIC_FACEBOOK_URL || 'https://facebook.com/jogja.discovery',
+    tiktok: import.meta.env.PUBLIC_TIKTOK_URL || 'https://tiktok.com/@jogja.discovery',
   },
   officeHours: {
     weekdays: '07:00 – 21:00 WIB',
