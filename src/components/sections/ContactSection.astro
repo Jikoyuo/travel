@@ -1,9 +1,19 @@
 ---
 import { companyInfo } from '../../data/content.js';
+import CustomSelect from '../ui/CustomSelect.astro';
 
 const whatsappDigits = companyInfo.whatsapp.replace(/[^0-9]/g, '');
 const defaultMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.0867!2d110.3632!3d-7.8099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5782c7e4c17d%3A0x3027a76e352be40!2sJl.%20Prawirotaman%2C%20Yogyakarta!5e0!3m2!1sen!2sid";
 const mapsEmbedUrl = import.meta.env.PUBLIC_GOOGLE_MAPS_EMBED_URL || defaultMapsEmbed;
+
+const subjectOptions = [
+  { value: 'tour-inquiry', label: 'Tour Inquiry' },
+  { value: 'custom-tour', label: 'Custom Tour Request' },
+  { value: 'group-booking', label: 'Group Booking' },
+  { value: 'pricing', label: 'Pricing & Availability' },
+  { value: 'partnership', label: 'Partnership' },
+  { value: 'other', label: 'Other' },
+];
 ---
 
 <section class="contact-section" id="contact" aria-label="Contact Jogja Discovery Tour Guide Yogyakarta">
@@ -62,15 +72,11 @@ const mapsEmbedUrl = import.meta.env.PUBLIC_GOOGLE_MAPS_EMBED_URL || defaultMaps
               </div>
               <div class="input-group">
                 <label for="cf-subject" class="input-label">Subject</label>
-                <select id="cf-subject" class="input-field input-field--select" aria-label="Select inquiry subject">
-                  <option value="">Select Subject</option>
-                  <option value="tour-inquiry">Tour Inquiry</option>
-                  <option value="custom-tour">Custom Tour Request</option>
-                  <option value="group-booking">Group Booking</option>
-                  <option value="pricing">Pricing &amp; Availability</option>
-                  <option value="partnership">Partnership</option>
-                  <option value="other">Other</option>
-                </select>
+                <CustomSelect
+                  id="cf-subject"
+                  placeholder="Select Subject"
+                  options={subjectOptions}
+                />
               </div>
             </div>
 

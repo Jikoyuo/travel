@@ -1,7 +1,15 @@
 ---
 import { tours } from '../../data/content.js';
+import CustomSelect from '../ui/CustomSelect.astro';
 
 const filterCategories = ['All', ...new Set(tours.map(t => t.category))];
+
+const sortOptions = [
+  { value: 'default', label: 'Default' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'rating', label: 'Top Rated' },
+];
 ---
 
 <section class="products-section" id="tours" aria-labelledby="tours-label">
@@ -24,12 +32,12 @@ const filterCategories = ['All', ...new Set(tours.map(t => t.category))];
         </div>
         <div class="sort-wrap">
           <label for="sort-select" class="sort-label">Sort by:</label>
-          <select id="sort-select" class="sort-select" aria-label="Sort tours">
-            <option value="default">Default</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
+          <CustomSelect
+            id="sort-select"
+            defaultValue="default"
+            options={sortOptions}
+            className="sort-select-custom"
+          />
         </div>
       </div>
     </header>
@@ -260,26 +268,15 @@ const filterCategories = ['All', ...new Set(tours.map(t => t.category))];
   white-space: nowrap;
 }
 
-.sort-select {
-  appearance: none;
-  padding: 8px 32px 8px 12px;
-  border-radius: 10px;
-  border: 1.5px solid var(--color-border);
-  background: var(--color-bg-card);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+.sort-select-custom {
+  min-width: 170px;
 }
 
-.sort-select:focus {
-  border-color: var(--color-accent-primary);
-  box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
-  outline: none;
+.sort-select-custom :global(.custom-select__trigger) {
+  padding: 8px 14px;
+  min-height: 38px;
+  border-radius: 10px;
+  font-size: 0.82rem;
 }
 
 .products-grid {

@@ -1,0 +1,356 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  name?: string;
+  options: Option[];
+  placeholder?: string;
+  defaultValue?: string;
+  required?: boolean;
+  className?: string;
+}
+
+const {
+  id,
+  name = id,
+  options,
+  placeholder = 'Select an option',
+  defaultValue = '',
+  required = false,
+  className = '',
+} = Astro.props;
+
+const selectedOption = options.find((opt) => opt.value === defaultValue);
+const initialLabel = selectedOption ? selectedOption.label : placeholder;
+---
+
+<div class={`custom-select ${className}`} id={`custom-select-${id}`}>
+  <!-- Hidden native select for form submission & JS compatibility -->
+  <select
+    id={id}
+    name={name}
+    required={required}
+    tabindex="-1"
+    aria-hidden="true"
+    class="custom-select__native"
+  >
+    <option value="" disabled selected={!defaultValue}>{placeholder}</option>
+    {options.map((opt) => (
+      <option value={opt.value} selected={opt.value === defaultValue}>
+        {opt.label}
+      </option>
+    ))}
+  </select>
+
+  <!-- Custom Trigger Button -->
+  <button
+    type="button"
+    class="custom-select__trigger"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls={`custom-select-list-${id}`}
+    id={`custom-select-btn-${id}`}
+  >
+    <span class="custom-select__value" data-placeholder={placeholder}>
+      {initialLabel}
+    </span>
+    <svg class="custom-select__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+
+  <!-- Floating Custom Options Dropdown -->
+  <div
+    class="custom-select__dropdown"
+    id={`custom-select-list-${id}`}
+    role="listbox"
+    aria-labelledby={`custom-select-btn-${id}`}
+  >
+    <ul class="custom-select__options">
+      {options.map((opt) => (
+        <li
+          class={`custom-select__option ${opt.value === defaultValue ? 'is-selected' : ''}`}
+          role="option"
+          data-value={opt.value}
+          aria-selected={opt.value === defaultValue ? 'true' : 'false'}
+          tabindex="0"
+        >
+          <span class="custom-select__option-label">{opt.label}</span>
+          <svg class="custom-select__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  function setupCustomSelects() {
+    document.querySelectorAll('.custom-select').forEach((container) => {
+      if (container.hasAttribute('data-custom-select-init')) return;
+      container.setAttribute('data-custom-select-init', 'true');
+
+      const nativeSelect = container.querySelector('.custom-select__native') as HTMLSelectElement;
+      const triggerBtn = container.querySelector('.custom-select__trigger') as HTMLButtonElement;
+      const valueSpan = container.querySelector('.custom-select__value') as HTMLElement;
+      const dropdown = container.querySelector('.custom-select__dropdown') as HTMLElement;
+      const options = container.querySelectorAll('.custom-select__option');
+
+      function open() {
+        // Close all other open selects
+        document.querySelectorAll('.custom-select.is-open').forEach((other) => {
+          if (other !== container) {
+            other.classList.remove('is-open');
+            other.querySelector('.custom-select__trigger')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        container.classList.add('is-open');
+        triggerBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function close() {
+        container.classList.remove('is-open');
+        triggerBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      triggerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = container.classList.contains('is-open');
+        if (isOpen) close();
+        else open();
+      });
+
+      options.forEach((option) => {
+        option.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const value = option.getAttribute('data-value') || '';
+          const label = option.querySelector('.custom-select__option-label')?.textContent || '';
+
+          // Update native select
+          if (nativeSelect) {
+            nativeSelect.value = value;
+            nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          // Update trigger label
+          if (valueSpan) {
+            valueSpan.textContent = label;
+            if (value === '') {
+              valueSpan.classList.add('is-placeholder');
+            } else {
+              valueSpan.classList.remove('is-placeholder');
+            }
+          }
+
+          // Update active state in UI
+          options.forEach((opt) => {
+            opt.classList.remove('is-selected');
+            opt.setAttribute('aria-selected', 'false');
+          });
+          option.classList.add('is-selected');
+          option.setAttribute('aria-selected', 'true');
+
+          close();
+          triggerBtn.focus();
+        });
+
+        // Keyboard navigation for option items
+        option.addEventListener('keydown', (e: Event) => {
+          const keyEvent = e as KeyboardEvent;
+          if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+            keyEvent.preventDefault();
+            (option as HTMLElement).click();
+          }
+        });
+      });
+
+      // Global click outside listener
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target as Node)) {
+          close();
+        }
+      });
+
+      // Escape key to close
+      container.addEventListener('keydown', (e: Event) => {
+        const keyEvent = e as KeyboardEvent;
+        if (keyEvent.key === 'Escape') {
+          close();
+          triggerBtn.focus();
+        }
+      });
+    });
+  }
+
+  // Setup on page load & Astro view transitions
+  document.addEventListener('DOMContentLoaded', setupCustomSelects);
+  setupCustomSelects();
+</script>
+
+<style>
+.custom-select {
+  --green: #2D5016;
+  --sand: #D4A574;
+  --border: #E5E0D8;
+  --bg: #FFFFFF;
+  --text: #1A1A1A;
+  --muted: #6B6B6B;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.custom-select__native {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  clip: rect(0, 0, 0, 0);
+}
+
+.custom-select__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 18px;
+  min-height: 48px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  text-align: left;
+}
+
+.custom-select__trigger:hover {
+  border-color: var(--green);
+}
+
+.custom-select.is-open .custom-select__trigger,
+.custom-select__trigger:focus-visible {
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(45,80,22,0.12);
+}
+
+.custom-select__value {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.custom-select__value.is-placeholder {
+  color: var(--muted);
+}
+
+.custom-select__arrow {
+  width: 18px;
+  height: 18px;
+  stroke: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease), stroke 0.2s;
+}
+
+.custom-select:hover .custom-select__arrow {
+  stroke: var(--green);
+}
+
+.custom-select.is-open .custom-select__arrow {
+  transform: rotate(180deg);
+  stroke: var(--green);
+}
+
+/* Floating Options Dropdown */
+.custom-select__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: #FFFFFF;
+  border: 1px solid rgba(45,80,22,0.15);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(20,35,10,0.14), 0 2px 8px rgba(0,0,0,0.04);
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+}
+
+.custom-select.is-open .custom-select__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.custom-select__options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45,80,22,0.2) transparent;
+}
+
+.custom-select__options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-select__options::-webkit-scrollbar-thumb {
+  background: rgba(45,80,22,0.2);
+  border-radius: 3px;
+}
+
+.custom-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.custom-select__option:hover,
+.custom-select__option:focus-visible {
+  background: rgba(45,80,22,0.08);
+  color: var(--green);
+}
+
+.custom-select__option.is-selected {
+  background: rgba(45,80,22,0.12);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.custom-select__check {
+  width: 16px;
+  height: 16px;
+  stroke: var(--green);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.custom-select__option.is-selected .custom-select__check {
+  opacity: 1;
+}
+</style>
