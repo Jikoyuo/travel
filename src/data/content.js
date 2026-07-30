@@ -1,3 +1,5 @@
+import { getToursFromSanity } from '../lib/sanity.js';
+
 export const categories = [
   {
     id: 1,
@@ -67,7 +69,7 @@ export const categories = [
   },
 ];
 
-export const tours = [
+const defaultTours = [
   {
     id: 1,
     name: "Borobudur Sunrise Experience",
@@ -303,6 +305,10 @@ export const tours = [
       "https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fm=webp&fit=crop&w=500&q=70",
   },
 ];
+
+// Fetch from Sanity API if available, else fallback to default static tours
+const sanityTours = await getToursFromSanity();
+export const tours = (sanityTours && sanityTours.length > 0) ? sanityTours : defaultTours;
 
 export const features = [
   {

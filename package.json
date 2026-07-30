@@ -10,8 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.3.1",
+    "@sanity/astro": "^3.5.0",
+    "@sanity/client": "^7.25.0",
+    "@sanity/image-url": "^2.1.1",
     "astro": "^5.10.2",
-    "@astrojs/sitemap": "^3.3.1"
+    "sanity": "^6.7.0"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
