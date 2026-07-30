@@ -15,7 +15,9 @@ export default defineConfig({
       useCdn: false,
       studioBasePath: '/admin',
     }),
-    react(),
+    react({
+      include: ['**/*.{jsx,tsx}'],
+    }),
     sitemap(),
   ],
   vite: {
