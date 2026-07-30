@@ -1,5 +1,11 @@
 ---
 import StudioAdmin from '../../components/StudioAdmin.jsx';
+
+export function getStaticPaths() {
+  return [
+    { params: { index: undefined } },
+  ];
+}
 ---
 
 <!doctype html>
