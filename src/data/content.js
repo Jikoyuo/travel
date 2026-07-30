@@ -308,9 +308,8 @@ const defaultTours = [
   },
 ];
 
-// Fetch from Sanity API if available, else fallback to default static tours
-const sanityTours = await getToursFromSanity();
-export const tours = (sanityTours && sanityTours.length > 0) ? sanityTours : defaultTours;
+// 100% PURE REAL-TIME DATA FROM SANITY CMS
+export const tours = await getToursFromSanity();
 
 export const features = [
   {

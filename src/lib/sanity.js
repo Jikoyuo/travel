@@ -34,7 +34,7 @@ export async function getToursFromSanity() {
       description
     }`;
     const data = await sanityClient.fetch(query);
-    if (!data || data.length === 0) return null;
+    if (!data || !Array.isArray(data)) return [];
     return data.map((item, index) => ({
       id: item._id || index + 1,
       name: item.name,
@@ -48,7 +48,7 @@ export async function getToursFromSanity() {
       image: item.image || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=500&q=70',
     }));
   } catch (error) {
-    console.warn('Sanity fetch warning (using local fallback data):', error);
-    return null;
+    console.error('Sanity fetch error:', error);
+    return [];
   }
 }
