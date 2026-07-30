@@ -1,5 +1,7 @@
 
 
+import { getToursFromSanity } from '../lib/sanity.js';
+
 export const categories = [
   {
     id: 1,
@@ -306,7 +308,9 @@ const defaultTours = [
   },
 ];
 
-export const tours = defaultTours;
+// Fetch from Sanity API if available, else fallback to default static tours
+const sanityTours = await getToursFromSanity();
+export const tours = (sanityTours && sanityTours.length > 0) ? sanityTours : defaultTours;
 
 export const features = [
   {
