@@ -17,4 +17,30 @@ export default defineConfig({
     react(),
     sitemap(),
   ],
+  vite: {
+    optimizeDeps: {
+      exclude: [
+        'sanity',
+        'sanity/structure',
+        'sanity/router',
+        '@sanity/astro',
+        '@sanity/client',
+        '@sanity/icons',
+        '@sanity/ui',
+        'styled-components',
+      ],
+    },
+    ssr: {
+      noExternal: [
+        'sanity',
+        'sanity/structure',
+        'sanity/router',
+        '@sanity/astro',
+        '@sanity/client',
+        '@sanity/icons',
+        '@sanity/ui',
+        'styled-components',
+      ],
+    },
+  },
 });
