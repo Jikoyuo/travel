@@ -1,0 +1,490 @@
+---
+import { tours } from '../../data/content.js';
+
+const filterCategories = ['All', ...new Set(tours.map(t => t.category))];
+---
+
+<section class="products-section" id="tours" aria-labelledby="tours-label">
+  <div class="container">
+    <header class="products-section__header reveal" id="tours-header">
+      <div class="products-section__header-top">
+        <span class="section-label" id="tours-label">Featured Tours</span>
+        <h2 class="heading-lg">Best Tour Guide Yogyakarta Packages &amp; Experiences</h2>
+      </div>
+
+      <div class="products-section__controls">
+        <div class="filter-group" role="group" aria-label="Filter tours by category">
+          {filterCategories.map((cat) => (
+            <button
+              class={`filter-btn ${cat === 'All' ? 'filter-btn--active' : ''}`}
+              data-filter={cat}
+              aria-label={`Filter by ${cat}`}
+            >{cat}</button>
+          ))}
+        </div>
+        <div class="sort-wrap">
+          <label for="sort-select" class="sort-label">Sort by:</label>
+          <select id="sort-select" class="sort-select" aria-label="Sort tours">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <div class="products-grid" id="tours-grid">
+      {tours.map((tour, index) => (
+        <div
+          class="products-grid__item reveal"
+          style={`transition-delay: ${index * 70}ms`}
+          data-tour-card
+          data-category={tour.category}
+          data-price={tour.price}
+          data-rating={tour.rating}
+          data-id={tour.id}
+          data-featured={[1, 3, 5, 8].includes(tour.id) ? 'true' : 'false'}
+        >
+          <article class="tour-card">
+            <div class="tour-card__image-wrap">
+              <img
+                src={`${tour.image}&auto=format&fit=crop&w=500&q=75`}
+                alt={`${tour.name} - Yogyakarta Tour Guide`}
+                class="tour-card__image"
+                loading="lazy"
+                decoding="async"
+                width="500"
+                height="625"
+              />
+              {tour.badge && (
+                <div class="tour-card__badge" data-badge-type={tour.badge.toLowerCase().replace(' ', '-')}>
+                  {tour.badge}
+                </div>
+              )}
+              <div class="tour-card__overlay">
+                <div class="tour-card__duration">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  {tour.duration}
+                </div>
+              </div>
+            </div>
+            <div class="tour-card__body">
+              <p class="tour-card__category">{tour.category}</p>
+              <h3 class="tour-card__name">{tour.name}</h3>
+              <div class="tour-card__footer">
+                <div class="tour-card__pricing">
+                  <span class="tour-card__price">${tour.price}<span class="tour-card__per">/person</span></span>
+                  {tour.originalPrice && (
+                    <span class="tour-card__original">${tour.originalPrice}</span>
+                  )}
+                </div>
+                <div class="tour-card__rating">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span>{tour.rating}</span>
+                  <span class="tour-card__reviews">({tour.reviews})</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      ))}
+    </div>
+
+    <div class="products-empty" id="tours-empty" style="display:none;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/></svg>
+      <p>No tours found in this category.</p>
+    </div>
+
+    <div class="products-section__cta reveal" id="tours-cta">
+      <button class="btn-view-all" id="toggle-all-btn" aria-label="Toggle all available Yogyakarta tours">
+        View All Tours
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById('tours-grid');
+  const emptyState = document.getElementById('tours-empty');
+  const toggleBtn = document.getElementById('toggle-all-btn');
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  const filterBtns = document.querySelectorAll('[data-filter]');
+  const allCards = Array.from(document.querySelectorAll('[data-tour-card]'));
+
+  let showAll = false;
+  let activeCategory = 'All';
+  let sortBy = 'default';
+
+  function updateGrid() {
+    let visibleCount = 0;
+    const cardsToSort = [...allCards];
+
+    // Sort
+    if (sortBy === 'price-asc') cardsToSort.sort((a, b) => Number(a.getAttribute('data-price')) - Number(b.getAttribute('data-price')));
+    else if (sortBy === 'price-desc') cardsToSort.sort((a, b) => Number(b.getAttribute('data-price')) - Number(a.getAttribute('data-price')));
+    else if (sortBy === 'rating') cardsToSort.sort((a, b) => Number(b.getAttribute('data-rating')) - Number(a.getAttribute('data-rating')));
+
+    // Re-append in sorted order
+    cardsToSort.forEach(card => grid?.appendChild(card));
+
+    cardsToSort.forEach((card) => {
+      const cat = card.getAttribute('data-category') || '';
+      const isFeatured = card.getAttribute('data-featured') === 'true';
+      const matchesCategory = activeCategory === 'All' || cat === activeCategory;
+      const matchesFeatured = showAll || activeCategory !== 'All' || isFeatured;
+
+      if (matchesCategory && matchesFeatured) {
+        (card as HTMLElement).style.display = '';
+        (card as HTMLElement).style.transitionDelay = `${visibleCount * 70}ms`;
+        visibleCount++;
+        requestAnimationFrame(() => card.classList.add('visible'));
+      } else {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
+    if (toggleBtn) toggleBtn.textContent = showAll ? 'Show Featured' : 'View All Tours';
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('filter-btn--active'));
+      btn.classList.add('filter-btn--active');
+      activeCategory = btn.getAttribute('data-filter') || 'All';
+      if (activeCategory !== 'All') showAll = true;
+      updateGrid();
+    });
+  });
+
+  sortSelect?.addEventListener('change', () => {
+    sortBy = sortSelect.value;
+    updateGrid();
+  });
+
+  toggleBtn?.addEventListener('click', () => {
+    showAll = !showAll;
+    if (!showAll) activeCategory = 'All';
+    filterBtns.forEach(b => b.classList.toggle('filter-btn--active', b.getAttribute('data-filter') === activeCategory));
+    updateGrid();
+  });
+
+  // Initial reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('#tours .reveal').forEach(el => revealObserver.observe(el));
+  updateGrid();
+</script>
+
+<style>
+.products-section {
+  padding: var(--space-12) 0 var(--space-16);
+  background: var(--color-bg-primary);
+}
+
+.products-section__header {
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.products-section__header-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.products-section__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: var(--color-accent-secondary);
+  color: var(--color-text-primary);
+}
+
+.filter-btn--active {
+  border-color: var(--color-accent-primary);
+  background: var(--color-accent-primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+}
+
+@media (max-width: 600px) {
+  .products-section__controls { flex-direction: column; align-items: flex-start; }
+  .filter-group { width: 100%; }
+}
+
+.sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-label {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.sort-select {
+  appearance: none;
+  padding: 8px 32px 8px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg-card);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.sort-select:focus {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+  outline: none;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+@media (max-width: 400px) { .products-grid { grid-template-columns: 1fr; } }
+@media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-3); } }
+@media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.products-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.products-section__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+.btn-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 100px;
+  background: var(--color-accent-primary);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.25s, transform 0.25s var(--ease-out-expo), box-shadow 0.25s;
+  box-shadow: 0 4px 16px rgba(45, 80, 22, 0.25);
+}
+
+.btn-view-all:hover {
+  background: #3a6820;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(45, 80, 22, 0.35);
+}
+
+.btn-view-all:active { transform: translateY(0) scale(0.98); }
+
+/* Tour Card */
+.tour-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+  cursor: pointer;
+}
+
+.tour-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+}
+
+.tour-card__image-wrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f0ede8;
+}
+
+.tour-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.tour-card:hover .tour-card__image { transform: scale(1.06); }
+
+.tour-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tour-card__badge[data-badge-type="sale"] { background: #e53935; color: #fff; }
+.tour-card__badge[data-badge-type="new"] { background: var(--color-accent-primary); color: #fff; }
+.tour-card__badge[data-badge-type="hot"] { background: var(--color-accent-highlight); color: #1A1A1A; }
+.tour-card__badge[data-badge-type="best-seller"] { background: var(--color-accent-primary); color: #fff; }
+.tour-card__badge[data-badge-type="popular"] { background: var(--color-accent-secondary); color: #fff; }
+
+.tour-card__overlay {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.tour-card__duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.tour-card__body { padding: 16px; }
+
+.tour-card__category {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-secondary);
+  margin-bottom: 4px;
+}
+
+.tour-card__name {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tour-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tour-card__pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tour-card__price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent-primary);
+}
+
+.tour-card__per {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.tour-card__original {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.tour-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--color-accent-highlight);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.tour-card__reviews {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s var(--ease-out-expo), transform 0.65s var(--ease-out-expo);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

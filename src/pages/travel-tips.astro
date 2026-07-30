@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title="Travel Tips — Jogja Discovery">
+  <Header />
+  <main class="page-content">
+    <div class="page-container">
+      <header class="page-header">
+        <span class="section-label">Guide & Advice</span>
+        <h1 class="page-title">Yogyakarta Travel Tips</h1>
+        <p class="page-subtitle">Essential advice for a memorable trip to Java's cultural capital</p>
+      </header>
+
+      <article class="prose">
+        <section>
+          <h2>1. What to Dress & Temple Etiquette</h2>
+          <p>
+            Yogyakarta is a cultural and traditional city. When visiting temples (Borobudur, Prambanan) or the Royal Palace (Kraton), wear modest clothing covering your shoulders and knees. Lightweight cotton or linen is ideal for Java's tropical climate. Sarongs are often provided at temple entrances.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Currency & Payments</h2>
+          <p>
+            The local currency is Indonesian Rupiah (IDR). While major hotels and restaurants accept Visa and Mastercard, cash is essential for street food markets, small souvenir shops, and local transport. ATMs are widely available across the city.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Best Time to Visit</h2>
+          <p>
+            The dry season from April to October brings sunny skies and clear views of Mount Merapi. Sunrise tours to Borobudur and Punthuk Setumbu are most vibrant during these months. The wet season (November to March) offers fewer tourists and lush green landscapes.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Local Transport Tips</h2>
+          <p>
+            For short distances within Malioboro and Prawirotaman, traditional horse carts (andong) or motorized rickshaws (bentor) are fun ways to get around. Ride-hailing apps like Grab and Gojek work seamlessly throughout Yogyakarta.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Must-Try Local Cuisine</h2>
+          <p>
+            Don't leave Jogja without trying Gudeg (sweet jackfruit stew), Bakpia (sweet pastry filled with mung bean or chocolate), Sate Klatak (lamb skewers grilled over coconut charcoal), and Wedang Ronde (warm ginger soup with glutinous rice balls).
+          </p>
+        </section>
+      </article>
+
+      <div class="page-back">
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px; border-radius: 999px; background: #2D5016; color: #fff; font-weight: 600;">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+.page-content {
+  padding-top: 120px;
+  padding-bottom: 96px;
+  background: var(--color-bg-primary);
+  min-height: 80vh;
+}
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.page-header {
+  margin-bottom: 40px;
+}
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-accent-primary);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.prose {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  margin-bottom: 12px;
+}
+.prose p {
+  color: var(--color-text-secondary);
+}
+.page-back {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+</style>

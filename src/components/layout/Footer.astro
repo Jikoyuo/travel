@@ -1,0 +1,317 @@
+---
+const currentYear = new Date().getFullYear();
+
+const navColumns = [
+  {
+    heading: 'Navigation',
+    links: [
+      { href: '/#about', label: 'About Us' },
+      { href: '/#destinations', label: 'Destinations' },
+      { href: '/#tours', label: 'Tours' },
+      { href: '/#features', label: 'Why Us' },
+      { href: '/#testimonials', label: 'Reviews' },
+      { href: '/#contact', label: 'Contact' },
+    ],
+  },
+  {
+    heading: 'Destinations',
+    links: [
+      { href: '/#tours', label: 'Temple Tours' },
+      { href: '/#tours', label: 'Cultural Experiences' },
+      { href: '/#tours', label: 'Nature Adventures' },
+      { href: '/#tours', label: 'Village Tours' },
+      { href: '/#tours', label: 'Food & Culinary' },
+      { href: '/#tours', label: 'Photography Tours' },
+    ],
+  },
+  {
+    heading: 'Services',
+    links: [
+      { href: '/booking-policy', label: 'Booking Policy' },
+      { href: '/cancellation-policy', label: 'Cancellation Policy' },
+      { href: '/safety-guidelines', label: 'Safety Guidelines' },
+      { href: '/#faq', label: 'FAQ' },
+      { href: '/travel-tips', label: 'Travel Tips' },
+    ],
+  },
+];
+
+const socials = [
+  { name: 'Instagram', href: 'https://instagram.com/jogja.discovery', icon: 'instagram' },
+  { name: 'TikTok', href: 'https://tiktok.com/@jogja.discovery', icon: 'tiktok' },
+  { name: 'Facebook', href: 'https://facebook.com/jogja.discovery', icon: 'facebook' },
+];
+---
+
+<footer class="app-footer" aria-label="Footer - Jogja Discovery Tour Guide Yogyakarta">
+  <!-- Top mountain divider -->
+  <div class="app-footer__divider" aria-hidden="true">
+    <svg viewBox="0 0 1400 80" preserveAspectRatio="none">
+      <path d="M0,40 L100,10 L200,35 L300,5 L400,30 L500,0 L600,25 L700,10 L800,40 L900,15 L1000,35 L1100,8 L1200,30 L1300,15 L1400,40 L1400,80 L0,80 Z"
+        fill="rgba(45,80,22,0.06)"/>
+    </svg>
+  </div>
+
+  <div class="app-footer__inner">
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <a href="/#hero" class="footer-brand__logo" aria-label="Jogja Discovery Tour Guide Yogyakarta Home">
+        <svg class="footer-brand__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M16 3L3 28H29L16 3Z" fill="currentColor" opacity="0.9"/>
+          <path d="M16 10L8 24H24L16 10Z" fill="currentColor" opacity="0.6"/>
+          <path d="M16 16L12 22H20L16 16Z" fill="currentColor"/>
+        </svg>
+        <span class="footer-brand__logo-text">Jogja Discovery</span>
+      </a>
+      <p class="footer-brand__tagline">Discover the Soul of Yogyakarta</p>
+      <p class="footer-brand__desc">
+        Your premier licensed Tour Guide &amp; Travel Agency in Yogyakarta, Indonesia. Helping travelers explore Java's cultural heart since 2016.
+      </p>
+
+      <!-- Contact info -->
+      <div class="footer-brand__contact">
+        <a href="https://maps.google.com/?q=Jl.+Prawirotaman+No.+28+Yogyakarta" target="_blank" rel="noopener noreferrer" class="footer-contact-item" aria-label="View office location on Google Maps">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Jl. Prawirotaman No. 28, Yogyakarta</span>
+        </a>
+        <a href="tel:+6285743210987" class="footer-contact-item" aria-label="Call Jogja Discovery Tour Guide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.59 1.31h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          <span>+62 857 4321 0987</span>
+        </a>
+        <a href="mailto:hello@jogja-discovery.com" class="footer-contact-item" aria-label="Email Jogja Discovery Tour Guide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>hello@jogja-discovery.com</span>
+        </a>
+      </div>
+
+      <!-- Social links -->
+      <div class="footer-socials">
+        {socials.map((social) => (
+          <a
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            aria-label={`Jogja Discovery on ${social.name}`}
+          >
+            {social.icon === 'instagram' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            )}
+            {social.icon === 'tiktok' && (
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.34 6.26 6.26 0 001.88-4.12V9a8.18 8.18 0 004.77 1.53V7.13a4.85 4.85 0 01-1.07-.44z"/>
+              </svg>
+            )}
+            {social.icon === 'facebook' && (
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Nav columns -->
+    <div class="footer-nav">
+      {navColumns.map((col) => (
+        <div class="footer-nav__col">
+          <h3 class="footer-nav__heading">{col.heading}</h3>
+          <ul class="footer-nav__list">
+            {col.links.map((link) => (
+              <li>
+                <a href={link.href} class="footer-nav__link" aria-label={`Read ${link.label}`}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="app-footer__bottom">
+    <p class="app-footer__copyright">
+      &copy; {currentYear} Jogja Discovery. All rights reserved. Tour Guide Yogyakarta Services.
+    </p>
+    <div class="app-footer__bottom-links">
+      <a href="/booking-policy" class="app-footer__bottom-link" aria-label="Read Privacy Policy">Privacy Policy</a>
+      <a href="/cancellation-policy" class="app-footer__bottom-link" aria-label="Read Terms & Conditions">Terms &amp; Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+.app-footer {
+  --green:  #2D5016;
+  --brown:  #8B7355;
+  --sand:   #D4A574;
+  --bg:     #FAFAFA;
+  --text:   #1A1A1A;
+  --muted:  #6B6B6B;
+  --border: #E8E5E0;
+  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  background: #1A1A1A;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative;
+}
+
+.app-footer__divider { height: 80px; margin-top: -1px; }
+.app-footer__divider svg { width: 100%; height: 100%; }
+
+.app-footer__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px) 64px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+
+@media (min-width: 900px) {
+  .app-footer__inner {
+    grid-template-columns: 1.5fr 2fr;
+    gap: 80px;
+  }
+}
+
+.footer-brand__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.footer-brand__logo-icon { width: 26px; height: 26px; color: var(--sand); }
+
+.footer-brand__logo-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.footer-brand__tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 16px;
+}
+
+.footer-brand__desc {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 280px;
+}
+
+.footer-brand__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-contact-item:hover { color: var(--sand); }
+.footer-contact-item svg { flex-shrink: 0; color: var(--sand); opacity: 0.7; }
+
+.footer-socials { display: flex; gap: 10px; }
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.footer-social-link:hover {
+  border-color: var(--sand);
+  background: rgba(212,165,116,0.1);
+  color: var(--sand);
+  transform: translateY(-2px);
+}
+
+.footer-social-link svg { width: 17px; height: 17px; }
+
+.footer-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .footer-nav { grid-template-columns: repeat(2, 1fr); }
+}
+
+.footer-nav__heading {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+
+.footer-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-nav__link {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-nav__link:hover { color: var(--sand); }
+
+.app-footer__bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 20px clamp(16px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.app-footer__copyright {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.app-footer__bottom-links { display: flex; gap: 24px; }
+
+.app-footer__bottom-link {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.app-footer__bottom-link:hover { color: var(--sand); }
+</style>

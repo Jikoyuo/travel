@@ -1,0 +1,254 @@
+---
+import { features } from '../../data/content.js';
+
+const iconPaths: Record<string, string> = {
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+  users: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2',
+  refresh: 'M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15',
+  headphones: 'M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z',
+  medal: 'M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM12 22a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM12 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+  compass: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z',
+};
+
+const usersCircle = '9 7 4';
+const usersPath2 = 'M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75';
+const compassPolygon = '16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88';
+---
+
+<section class="features-section" id="features">
+  <div class="topo-bg" aria-hidden="true">
+    <svg class="topo-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path class="topo-line" d="M0,300 Q200,100 400,300 Q600,500 800,300" />
+      <path class="topo-line" d="M0,350 Q200,150 400,350 Q600,550 800,350" />
+      <path class="topo-line" d="M0,250 Q200,50 400,250 Q600,450 800,250" />
+      <path class="topo-line" d="M0,400 Q200,200 400,400 Q600,600 800,400" />
+      <path class="topo-line" d="M0,200 Q200,0 400,200 Q600,400 800,200" />
+      <path class="topo-line" d="M0,450 Q200,250 400,450 Q600,650 800,450" />
+      <path class="topo-line" d="M0,150 Q200,-50 400,150 Q600,350 800,150" />
+    </svg>
+  </div>
+
+  <div class="section-inner" id="features-inner">
+    <header class="section-header">
+      <span class="section-label">Why Choose Us</span>
+      <h2 class="section-heading">Tour Experiences<br />You Can Rely On</h2>
+      <p class="section-subtitle">
+        From the moment you book to the end of your journey, we ensure every detail
+        is covered for a safe and unforgettable adventure.
+      </p>
+    </header>
+
+    <div class="features-bento-grid">
+      {features.map((feature, index) => (
+        <article
+          class="feature-card"
+          style={`--stagger-delay: ${index * 90}ms`}
+          data-feature-card
+        >
+          <div class="icon-wrapper">
+            <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d={iconPaths[feature.icon]} />
+              {feature.icon === 'users' && <><circle cx="9" cy="7" r="4"/><path d={usersPath2}/></>}
+              {feature.icon === 'compass' && <polygon points={compassPolygon}/>}
+            </svg>
+          </div>
+          <h3 class="feature-title">{feature.title}</h3>
+          <p class="feature-description">{feature.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const sectionInner = document.getElementById('features-inner');
+  const featureCards = document.querySelectorAll('[data-feature-card]');
+
+  const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        sectionObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  if (sectionInner) sectionObs.observe(sectionInner);
+
+  const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        cardObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  featureCards.forEach(card => cardObs.observe(card));
+</script>
+
+<style>
+.features-section {
+  --bg-primary: #fafafa;
+  --bg-card: #ffffff;
+  --accent-primary: #2d5016;
+  --accent-secondary: #8b7355;
+  --accent-highlight: #d4a574;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --ease-out-expo: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  position: relative;
+  background-color: var(--bg-primary);
+  overflow: hidden;
+  padding: 6rem 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.topo-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.045;
+  pointer-events: none;
+}
+
+.topo-svg { width: 100%; height: 100%; }
+
+.topo-line {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 1.2;
+}
+
+.topo-line:nth-child(even) { stroke: var(--accent-secondary); }
+
+.section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+
+.section-inner.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.features-section .section-label {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-highlight);
+  background: rgba(212, 165, 116, 0.12);
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid rgba(212, 165, 116, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+.section-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 400;
+  color: var(--accent-primary);
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.features-section .section-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--accent-secondary);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.features-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(45, 80, 22, 0.09);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.55s var(--ease-out-expo) var(--stagger-delay),
+    transform 0.55s var(--ease-out-expo) var(--stagger-delay),
+    box-shadow 0.3s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo);
+}
+
+.feature-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:hover {
+  box-shadow: 0 8px 32px rgba(45, 80, 22, 0.1);
+  border-color: rgba(45, 80, 22, 0.18);
+}
+
+.feature-card:hover .feature-icon { transform: scale(1.12); color: #ffffff; }
+.feature-card:hover .icon-wrapper { background: var(--accent-primary); }
+
+.icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: rgba(45, 80, 22, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s var(--ease-out-expo);
+  flex-shrink: 0;
+}
+
+.feature-icon {
+  color: var(--accent-primary);
+  transition: transform 0.35s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
+}
+
+.feature-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--accent-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.feature-description {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--accent-secondary);
+  margin: 0;
+}
+
+@media (max-width: 900px) { .features-bento-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) {
+  .features-bento-grid { grid-template-columns: 1fr; }
+  .features-section { padding: 4rem 1.25rem; }
+}
+</style>

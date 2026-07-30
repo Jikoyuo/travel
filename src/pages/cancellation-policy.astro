@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title="Cancellation Policy — Jogja Discovery">
+  <Header />
+  <main class="page-content">
+    <div class="page-container">
+      <header class="page-header">
+        <span class="section-label">Terms & Policy</span>
+        <h1 class="page-title">Cancellation & Refund Policy</h1>
+        <p class="page-subtitle">Last updated: July 2026</p>
+      </header>
+
+      <article class="prose">
+        <section>
+          <h2>1. Free Cancellation (24+ Hours Notice)</h2>
+          <p>
+            We understand plans change. You may cancel your tour reservation up to 24 hours prior to the scheduled tour departure time for a 100% full refund with no hidden processing fees.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Late Cancellation (Within 24 Hours)</h2>
+          <p>
+            Cancellations made within 24 hours of the tour start time are eligible for a 50% refund or the option to reschedule your tour to a future date within 12 months at no additional charge.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Weather & Natural Force Majeure</h2>
+          <p>
+            If a tour is cancelled by Jogja Discovery due to extreme weather, safety warnings, or natural events (such as volcanic alerts or torrential floods), you will receive a full 100% refund or an immediate option to switch to a safe alternative itinerary.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. How to Request a Refund</h2>
+          <p>
+            To request a cancellation, simply message our team via WhatsApp at +62 857 4321 0987 or send an email to hello@jogja-discovery.com with your booking reference ID. Refunds are processed within 3-5 business days.
+          </p>
+        </section>
+      </article>
+
+      <div class="page-back">
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px; border-radius: 999px; background: #2D5016; color: #fff; font-weight: 600;">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+.page-content {
+  padding-top: 120px;
+  padding-bottom: 96px;
+  background: var(--color-bg-primary);
+  min-height: 80vh;
+}
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.page-header {
+  margin-bottom: 40px;
+}
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-accent-primary);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.prose {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  margin-bottom: 12px;
+}
+.prose p {
+  color: var(--color-text-secondary);
+}
+.page-back {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+</style>

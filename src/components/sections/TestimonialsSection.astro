@@ -1,0 +1,348 @@
+---
+import { testimonials } from '../../data/content.js';
+---
+
+<section class="testimonials-section" id="testimonials" aria-label="Traveler Reviews - Tour Guide Yogyakarta">
+  <div class="testimonials-inner">
+    <header class="testimonials-header">
+      <span class="section-label">Traveler Reviews</span>
+      <h2 class="section-title">What Our Guests Say About Our Tour Guide Yogyakarta Services</h2>
+      <p class="section-subtitle">
+        Real stories from travelers who explored Yogyakarta with us. Their experiences speak louder than words.
+      </p>
+    </header>
+
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="carousel-track">
+        {testimonials.map((testimonial) => (
+          <article class="testimonial-card">
+            <div class="rating-row">
+              {Array.from({ length: testimonial.rating }).map(() => (
+                <svg class="star-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              ))}
+            </div>
+            <blockquote class="quote">"{testimonial.quote}"</blockquote>
+            <footer class="card-footer">
+              <img src={testimonial.avatar} alt={`${testimonial.name} - Tour Guide Yogyakarta Review`} class="avatar" loading="lazy" decoding="async" width="48" height="48" />
+              <div class="author-info">
+                <p class="author-name">{testimonial.name}</p>
+                <p class="author-role">{testimonial.role}</p>
+                <p class="trip-count">
+                  <svg class="trip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 17l4-8 4 4 4-6 4 10"/><path d="M3 21h18"/>
+                  </svg>
+                  {testimonial.tripCount} trips
+                </p>
+              </div>
+            </footer>
+          </article>
+        ))}
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous testimonial review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next testimonial review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('carousel-track') as HTMLElement;
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  const dotsWrap = document.getElementById('carousel-dots');
+  const cards = track?.querySelectorAll('.testimonial-card');
+
+  if (track && cards && dotsWrap) {
+    const total = cards.length;
+    let current = 0;
+    let autoplayTimer: number;
+    let isHovering = false;
+
+    function getCardsPerView() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 640) return 2;
+      return 1;
+    }
+
+    function getMaxIndex() {
+      return Math.max(0, total - getCardsPerView());
+    }
+
+    // Build dots
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      const maxIdx = getMaxIndex();
+      for (let i = 0; i <= maxIdx; i++) {
+        const dot = document.createElement('button');
+        dot.className = `carousel-dot${i === current ? ' carousel-dot--active' : ''}`;
+        dot.setAttribute('aria-label', `Go to testimonial slide ${i + 1}`);
+        const innerDot = document.createElement('span');
+        innerDot.className = 'carousel-dot-inner';
+        dot.appendChild(innerDot);
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+      }
+    }
+
+    function updateDots() {
+      const dots = dotsWrap.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('carousel-dot--active', i === current);
+      });
+    }
+
+    function goTo(index: number) {
+      const maxIdx = getMaxIndex();
+      current = Math.max(0, Math.min(index, maxIdx));
+      const card = cards[0] as HTMLElement;
+      const cardWidth = card.offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap) || 20;
+      track.style.transform = `translateX(-${current * (cardWidth + gap)}px)`;
+      updateDots();
+    }
+
+    function next() { goTo(current >= getMaxIndex() ? 0 : current + 1); }
+    function prev() { goTo(current <= 0 ? getMaxIndex() : current - 1); }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = window.setInterval(() => {
+        if (!isHovering) next();
+      }, 4500);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayTimer);
+    }
+
+    prevBtn?.addEventListener('click', () => { prev(); startAutoplay(); });
+    nextBtn?.addEventListener('click', () => { next(); startAutoplay(); });
+
+    track.addEventListener('mouseenter', () => { isHovering = true; });
+    track.addEventListener('mouseleave', () => { isHovering = false; });
+
+    window.addEventListener('resize', () => {
+      buildDots();
+      goTo(Math.min(current, getMaxIndex()));
+    });
+
+    buildDots();
+    startAutoplay();
+  }
+
+  // Reveal
+  const section = document.getElementById('testimonials');
+  if (section) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(section);
+  }
+</script>
+
+<style>
+.testimonials-section {
+  --green: #2D5016;
+  --brown: #8B7355;
+  --sand: #D4A574;
+  --bg: #FAFAFA;
+  --card: #FFFFFF;
+  --border: #E8E5E0;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --radius-lg: 16px;
+
+  padding: var(--space-12, 96px) 0 var(--space-16, 128px);
+  background: var(--bg);
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.testimonials-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.testimonials-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+.testimonials-header {
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.carousel-wrap { position: relative; }
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s var(--ease);
+  will-change: transform;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: var(--card);
+  border: 1px solid rgba(45, 80, 22, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  min-width: calc(33.333% - 14px);
+  max-width: calc(33.333% - 14px);
+  flex-shrink: 0;
+  box-shadow: 0 2px 16px rgba(45, 80, 22, 0.06);
+  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.testimonial-card:hover {
+  box-shadow: 0 8px 32px rgba(45, 80, 22, 0.12);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 1023px) {
+  .testimonial-card { min-width: calc(50% - 10px); max-width: calc(50% - 10px); }
+}
+
+@media (max-width: 639px) {
+  .testimonial-card { min-width: 100%; max-width: 100%; }
+}
+
+.rating-row { display: flex; gap: 0.2rem; }
+
+.star-icon { width: 16px; height: 16px; color: var(--sand); }
+
+.quote {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #3a3a3a;
+  font-style: normal;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(45, 80, 22, 0.08);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--green);
+  flex-shrink: 0;
+}
+
+.author-info { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.author-name {
+  margin: 0;
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.9375rem;
+  color: var(--green);
+  font-weight: normal;
+}
+
+.author-role {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--brown);
+}
+
+.trip-count {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--sand);
+}
+
+.trip-icon { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* Carousel Controls */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.carousel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--green);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.carousel-btn:hover {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.carousel-dots { display: flex; gap: 4px; }
+
+.carousel-dot {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.carousel-dot-inner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.carousel-dot--active .carousel-dot-inner {
+  background: var(--green);
+  transform: scale(1.3);
+}
+
+.carousel-dot:hover .carousel-dot-inner { background: var(--brown); }
+</style>

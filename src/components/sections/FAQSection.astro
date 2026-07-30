@@ -1,0 +1,341 @@
+---
+const faqs = [
+  {
+    question: 'How do I book a tour with Jogja Discovery?',
+    answer: 'You can book directly through our website by filling out the contact form, or reach us instantly via WhatsApp at +62 857 4321 0987. We recommend booking at least 48 hours in advance, especially for sunrise tours and popular destinations like Borobudur and Jomblang Cave.',
+  },
+  {
+    question: 'What is included in the tour price?',
+    answer: 'All tour prices include a licensed English-speaking guide, private air-conditioned transportation, entrance fees to all attractions, mineral water, and comprehensive travel insurance. Some tours also include meals — check each tour description for specific inclusions.',
+  },
+  {
+    question: 'Can I customize a tour itinerary?',
+    answer: 'Absolutely! We specialize in creating custom itineraries tailored to your interests, pace, and schedule. Whether you want to combine temple visits with a cooking class or add a photography session, our team will design the perfect experience for you.',
+  },
+  {
+    question: 'What should I wear and bring on tours?',
+    answer: 'We recommend comfortable walking shoes, lightweight breathable clothing, sunscreen, and a hat. For temple visits, please bring a sarong or wear clothing that covers your knees and shoulders (we provide sarongs if needed). For cave and nature tours, wear closed-toe shoes.',
+  },
+  {
+    question: 'Is it safe to travel in Yogyakarta?',
+    answer: 'Yogyakarta is one of the safest cities in Indonesia for tourists. Our guides are trained in first aid and carry emergency supplies. All vehicles are regularly inspected, and we maintain comprehensive insurance coverage. We also monitor weather and volcanic activity in real-time.',
+  },
+  {
+    question: 'What is your cancellation policy?',
+    answer: 'We offer free cancellation up to 24 hours before your scheduled tour for a full refund. Cancellations within 24 hours receive a 50% refund or the option to reschedule. In case of severe weather or natural events, we offer full refunds or alternative dates at no extra cost.',
+  },
+  {
+    question: 'Do you offer tours in languages other than English?',
+    answer: 'Yes! Besides English, we have guides fluent in Japanese, Mandarin, Korean, French, German, and Spanish. Please specify your preferred language when booking, and we will match you with the right guide.',
+  },
+  {
+    question: 'What is the best time to visit Yogyakarta?',
+    answer: 'Yogyakarta can be visited year-round, but the dry season (April to October) offers the best weather for outdoor activities. The sunrise at Borobudur is spectacular year-round. The rainy season (November to March) has fewer crowds and lush green landscapes — perfect for photography.',
+  },
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="faq-content">
+      <header class="faq-header">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">
+          Everything you need to know before your Yogyakarta adventure. Can't find your answer? Contact us directly.
+        </p>
+      </header>
+
+      <div class="accordion" id="faq-accordion">
+        {faqs.map((faq, index) => (
+          <div class="accordion-item" data-accordion-item>
+            <button
+              class="accordion-trigger"
+              aria-expanded="false"
+              aria-controls={`faq-panel-${index}`}
+              id={`faq-trigger-${index}`}
+            >
+              <span class="accordion-question">{faq.question}</span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div
+              class="accordion-panel"
+              id={`faq-panel-${index}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${index}`}
+            >
+              <div class="accordion-panel-inner">
+                <p class="accordion-answer">{faq.answer}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <aside class="faq-cta-card">
+      <div class="faq-cta-inner">
+        <div class="faq-cta-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3 class="faq-cta-title">Still have questions?</h3>
+        <p class="faq-cta-text">
+          Our travel experts are ready to help you plan the perfect Yogyakarta experience.
+        </p>
+        <a
+          href="https://wa.me/6285743210987?text=Hi%20Jogja%20Discovery!%20I%20have%20a%20question%20about%20your%20tours."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="faq-cta-btn"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.55 4.11 1.513 5.84L0 24l6.335-1.652A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.79 9.79 0 0 1-5.122-1.44l-.366-.218-3.797.99.999-3.648-.238-.379A9.79 9.79 0 0 1 2.18 12 9.82 9.82 0 0 1 12 2.18 9.82 9.82 0 0 1 21.82 12 9.82 9.82 0 0 1 12 21.82z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+        <a href="#contact" class="faq-cta-link">
+          Or send us a message
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  const accordionItems = document.querySelectorAll('[data-accordion-item]');
+
+  accordionItems.forEach(item => {
+    const trigger = item.querySelector('.accordion-trigger') as HTMLButtonElement;
+    const panel = item.querySelector('.accordion-panel') as HTMLElement;
+    const inner = panel?.querySelector('.accordion-panel-inner') as HTMLElement;
+
+    trigger?.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close all other items
+      accordionItems.forEach(other => {
+        if (other !== item) {
+          const otherTrigger = other.querySelector('.accordion-trigger') as HTMLButtonElement;
+          const otherPanel = other.querySelector('.accordion-panel') as HTMLElement;
+          otherTrigger?.setAttribute('aria-expanded', 'false');
+          if (otherPanel) otherPanel.style.maxHeight = '0';
+          other.classList.remove('accordion-item--open');
+        }
+      });
+
+      if (isOpen) {
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = '0';
+        item.classList.remove('accordion-item--open');
+      } else {
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = inner.scrollHeight + 'px';
+        item.classList.add('accordion-item--open');
+      }
+    });
+  });
+
+  // Reveal
+  const faqSection = document.getElementById('faq');
+  if (faqSection) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(faqSection);
+  }
+</script>
+
+<style>
+.faq-section {
+  --green: #2D5016;
+  --brown: #8B7355;
+  --sand: #D4A574;
+  --bg: #FAFAFA;
+  --card: #FFFFFF;
+  --border: #E8E5E0;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  padding: var(--space-12, 96px) 0 var(--space-16, 128px);
+  background: var(--bg);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.faq-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.faq-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .faq-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.faq-header {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Accordion */
+.accordion { display: flex; flex-direction: column; gap: 8px; }
+
+.accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.accordion-item--open {
+  border-color: rgba(45, 80, 22, 0.2);
+  box-shadow: 0 4px 16px rgba(45, 80, 22, 0.06);
+}
+
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 24px;
+  gap: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--green);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.accordion-trigger:hover { color: var(--brown); }
+
+.accordion-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--brown);
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease);
+}
+
+.accordion-item--open .accordion-chevron { transform: rotate(180deg); }
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease);
+}
+
+.accordion-panel-inner { padding: 0 24px 20px; }
+
+.accordion-answer {
+  font-size: 0.9375rem;
+  color: var(--brown);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* CTA Card */
+.faq-cta-card {
+  position: sticky;
+  top: 96px;
+  border-radius: var(--radius-xl);
+  background: var(--green);
+  overflow: hidden;
+}
+
+.faq-cta-inner {
+  padding: 36px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-cta-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sand);
+}
+
+.faq-cta-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+}
+
+.faq-cta-text {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.faq-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: #25D366;
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  margin-top: 4px;
+}
+
+.faq-cta-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+}
+
+.faq-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.faq-cta-link:hover { color: var(--sand); gap: 10px; }
+</style>

@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title="Safety Guidelines — Jogja Discovery">
+  <Header />
+  <main class="page-content">
+    <div class="page-container">
+      <header class="page-header">
+        <span class="section-label">Traveler Safety</span>
+        <h1 class="page-title">Safety Guidelines</h1>
+        <p class="page-subtitle">Your security and well-being are our highest priority</p>
+      </header>
+
+      <article class="prose">
+        <section>
+          <h2>1. Government-Licensed Guides</h2>
+          <p>
+            All Jogja Discovery tour leaders hold official license certifications from the Indonesian Tourism Board and undergo yearly refresher training in emergency response, first aid, and cultural history.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Vehicle & Equipment Safety</h2>
+          <p>
+            Our fleet of private air-conditioned vehicles undergoes bi-weekly safety inspections. For adventure tours (such as Jomblang Cave abseiling and Merapi Lava Jeep tours), all safety equipment (helmets, harnesses, boots, life jackets) meets international CE/UIAA standards.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Health & Travel Insurance</h2>
+          <p>
+            Every booked guest is covered under our basic local accident insurance during tour hours. We also strongly encourage travelers to maintain comprehensive international medical insurance for personal trip coverage.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Volcanic & Weather Monitoring</h2>
+          <p>
+            Mount Merapi is an active volcano. We work closely with the Volcanology and Geological Hazard Mitigation Center (PVMBG). In the event of volcanic activity or severe weather warnings, affected itineraries are immediately adjusted to safe zones.
+          </p>
+        </section>
+      </article>
+
+      <div class="page-back">
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px; border-radius: 999px; background: #2D5016; color: #fff; font-weight: 600;">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+.page-content {
+  padding-top: 120px;
+  padding-bottom: 96px;
+  background: var(--color-bg-primary);
+  min-height: 80vh;
+}
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.page-header {
+  margin-bottom: 40px;
+}
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-accent-primary);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.prose {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  margin-bottom: 12px;
+}
+.prose p {
+  color: var(--color-text-secondary);
+}
+.page-back {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+</style>

@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title="Booking Policy — Jogja Discovery">
+  <Header />
+  <main class="page-content">
+    <div class="page-container">
+      <header class="page-header">
+        <span class="section-label">Terms & Policy</span>
+        <h1 class="page-title">Booking Policy</h1>
+        <p class="page-subtitle">Last updated: July 2026</p>
+      </header>
+
+      <article class="prose">
+        <section>
+          <h2>1. Reservation & Confirmation</h2>
+          <p>
+            All tour reservations made with Jogja Discovery are subject to availability and confirmation. A booking is considered confirmed once you receive an official confirmation email or WhatsApp notification containing your unique booking reference code.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Payment Terms</h2>
+          <p>
+            To secure your booking, a 30% deposit is required at the time of reservation. The remaining balance must be paid at least 24 hours prior to the tour start time or directly to your guide upon arrival in cash (IDR, USD, or EUR) or via credit card/bank transfer.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Minimum Group Size & Private Tours</h2>
+          <p>
+            Our group tours require a minimum of 2 participants to operate. If the minimum is not met, we will offer you an alternative date, a private tour upgrade, or a full refund. Private tours operate guaranteed regardless of group size.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Inclusions & Exclusions</h2>
+          <p>
+            Each tour page clearly lists what is included (e.g. licensed guide, vehicle, entrance tickets, mineral water) and excluded (e.g. personal expenses, tips, alcoholic beverages). Please review your voucher for exact details.
+          </p>
+        </section>
+      </article>
+
+      <div class="page-back">
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px; border-radius: 999px; background: #2D5016; color: #fff; font-weight: 600;">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+.page-content {
+  padding-top: 120px;
+  padding-bottom: 96px;
+  background: var(--color-bg-primary);
+  min-height: 80vh;
+}
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.page-header {
+  margin-bottom: 40px;
+}
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-accent-primary);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.prose {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  margin-bottom: 12px;
+}
+.prose p {
+  color: var(--color-text-secondary);
+}
+.page-back {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+</style>

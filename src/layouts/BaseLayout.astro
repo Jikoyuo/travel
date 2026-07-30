@@ -1,0 +1,137 @@
+---
+import '../styles/main.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Jogja Discovery — Top Rated Tour Guide Yogyakarta & Travel Packages',
+  description = 'Book the best licensed Tour Guide in Yogyakarta. Experience Borobudur Sunrise, Prambanan Sunset, Jomblang Cave, Merapi Jeep, & authentic Javanese cultural travel tours.',
+  ogImage = 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1200&q=80',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLdData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "Jogja Discovery — Tour Guide Yogyakarta",
+  "image": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1200&q=80",
+  "description": "Premier tour guide service and travel agency in Yogyakarta, Indonesia. Specialized in Borobudur sunrise, Prambanan sunset, Jomblang cave, and Javanese cultural heritage tours.",
+  "url": "https://jogja-discovery.com",
+  "telephone": "+62-857-4321-0987",
+  "email": "hello@jogja-discovery.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Jl. Prawirotaman No. 28",
+    "addressLocality": "Yogyakarta",
+    "addressRegion": "DI Yogyakarta",
+    "postalCode": "55153",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -7.8099,
+    "longitude": 110.3654
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "07:00",
+      "closes": "21:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday","Sunday"],
+      "opens": "08:00",
+      "closes": "20:00"
+    }
+  ],
+  "sameAs": [
+    "https://instagram.com/jogja.discovery",
+    "https://facebook.com/jogja.discovery",
+    "https://tiktok.com/@jogja.discovery"
+  ],
+  "priceRange": "$$",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "2156"
+  },
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Yogyakarta, Indonesia"
+  }
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="tour guide yogyakarta, travel yogyakarta, jogja tour guide, yogyakarta tours, borobudur sunrise tour, prambanan tour, yogyakarta travel agency, jomblang cave tour, merapi jeep tour, java travel guide" />
+    <meta name="author" content="Jogja Discovery" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#2D5016" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Jogja Discovery" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Asynchronous Non-Render-Blocking Google Fonts Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      media="print"
+      is:inline
+    />
+    <script is:inline>
+      const gfont = document.querySelector('link[href*="fonts.googleapis.com"][media="print"]');
+      if (gfont) {
+        gfont.addEventListener('load', function() { this.media = 'all'; });
+        setTimeout(function() { gfont.media = 'all'; }, 100);
+      }
+    </script>
+
+    <!-- Ultra-Light Responsive Hero Image Preload -->
+    <link
+      rel="preload"
+      as="image"
+      imagesrcset="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=480&q=60 480w, https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fm=webp&fit=crop&w=1000&q=70 1000w"
+      imagesizes="(max-width: 768px) 100vw, 1000px"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={jsonLdData}></script>
+  </head>
+  <body>
+    <div class="app">
+      <slot />
+    </div>
+  </body>
+</html>

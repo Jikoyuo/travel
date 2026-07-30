@@ -1,0 +1,704 @@
+---
+import { companyInfo } from '../../data/content.js';
+---
+
+<section class="contact-section" id="contact" aria-label="Contact Jogja Discovery Tour Guide Yogyakarta">
+  <div class="contact-inner">
+    <header class="contact-header">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title">Plan Your Yogyakarta Adventure with a Local Tour Guide</h2>
+      <p class="section-subtitle">
+        Ready to explore? Send us a message and our licensed Yogyakarta travel experts will craft the perfect itinerary for you.
+      </p>
+    </header>
+
+    <div class="contact-grid">
+      <!-- Left: Form + Info -->
+      <div class="contact-left">
+        <!-- Contact Form -->
+        <div class="form-card">
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="contact-form__header">
+              <h3 class="contact-form__title">Send a Message</h3>
+              <p class="contact-form__subtitle">
+                Fill out the form below and our tour guide team will respond within 24 hours.
+              </p>
+            </div>
+
+            <!-- Status Banner -->
+            <div class="status-banner status-banner--hidden" id="status-banner" role="alert">
+              <svg class="status-icon" id="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+              </svg>
+              <span id="status-text"></span>
+              <button type="button" class="status-close" id="status-close" aria-label="Dismiss message status">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+
+            <!-- Row: Name + Email -->
+            <div class="form-row">
+              <div class="input-group">
+                <label for="cf-name" class="input-label">Full Name <span class="required" aria-hidden="true">*</span></label>
+                <input id="cf-name" type="text" class="input-field" placeholder="John Smith" autocomplete="name" />
+                <p class="field-error" id="cf-name-error" role="alert"></p>
+              </div>
+              <div class="input-group">
+                <label for="cf-email" class="input-label">Email Address <span class="required" aria-hidden="true">*</span></label>
+                <input id="cf-email" type="email" class="input-field" placeholder="john@example.com" autocomplete="email" />
+                <p class="field-error" id="cf-email-error" role="alert"></p>
+              </div>
+            </div>
+
+            <!-- Row: Phone + Subject -->
+            <div class="form-row">
+              <div class="input-group">
+                <label for="cf-phone" class="input-label">Phone Number</label>
+                <input id="cf-phone" type="tel" class="input-field" placeholder="+1 234 567 8901" autocomplete="tel" />
+              </div>
+              <div class="input-group">
+                <label for="cf-subject" class="input-label">Subject</label>
+                <select id="cf-subject" class="input-field input-field--select" aria-label="Select inquiry subject">
+                  <option value="">Select Subject</option>
+                  <option value="tour-inquiry">Tour Inquiry</option>
+                  <option value="custom-tour">Custom Tour Request</option>
+                  <option value="group-booking">Group Booking</option>
+                  <option value="pricing">Pricing &amp; Availability</option>
+                  <option value="partnership">Partnership</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="input-group">
+              <label for="cf-message" class="input-label">Your Message <span class="required" aria-hidden="true">*</span></label>
+              <textarea id="cf-message" class="input-field" placeholder="Tell us about your travel plans, interests, and any questions..." rows="5"></textarea>
+              <p class="field-error" id="cf-message-error" role="alert"></p>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" id="submit-btn" aria-label="Send contact message">
+              <svg class="btn-submit__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send Message
+            </button>
+
+            <p class="privacy-note">
+              By sending a message, you agree to our
+              <a href="/booking-policy" class="privacy-link" aria-label="Read Privacy and Booking Policy">Privacy Policy</a>.
+              Your data will not be shared with third parties.
+            </p>
+          </form>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="info-row">
+          <a href="https://wa.me/{companyInfo.whatsapp}?text=Hi%20Jogja%20Discovery!" target="_blank" rel="noopener noreferrer" class="info-card info-card--wa" aria-label="Chat with Tour Guide Yogyakarta on WhatsApp">
+            <div class="info-card__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.55 4.11 1.513 5.84L0 24l6.335-1.652A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.79 9.79 0 0 1-5.122-1.44l-.366-.218-3.797.99.999-3.648-.238-.379A9.79 9.79 0 0 1 2.18 12 9.82 9.82 0 0 1 12 2.18 9.82 9.82 0 0 1 21.82 12 9.82 9.82 0 0 1 12 21.82z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="info-card__label">WhatsApp</p>
+              <p class="info-card__value">{companyInfo.phone}</p>
+            </div>
+          </a>
+
+          <a href="mailto:{companyInfo.email}" class="info-card" aria-label="Send email to Jogja Discovery Tour Guide">
+            <div class="info-card__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <p class="info-card__label">Email</p>
+              <p class="info-card__value">{companyInfo.email}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Map + Hours -->
+      <div class="contact-right">
+        <div class="map-card" id="map-container">
+          <iframe
+            data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.0867!2d110.3632!3d-7.8099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5782c7e4c17d%3A0x3027a76e352be40!2sJl.%20Prawirotaman%2C%20Yogyakarta!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Jogja Discovery Tour Guide Office Location Map"
+            id="map-iframe"
+          ></iframe>
+        </div>
+
+        <div class="hours-card">
+          <h3 class="hours-card__title">Office Hours</h3>
+          <div class="hours-grid">
+            <div class="hours-item">
+              <span class="hours-day">Weekdays</span>
+              <span class="hours-time">{companyInfo.officeHours.weekdays}</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Weekends</span>
+              <span class="hours-time">{companyInfo.officeHours.weekends}</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Holidays</span>
+              <span class="hours-time">{companyInfo.officeHours.holidays}</span>
+            </div>
+          </div>
+          <p class="hours-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Tours operate 365 days a year, including holidays
+          </p>
+        </div>
+
+        <div class="address-card">
+          <div class="address-pin">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="address-text">{companyInfo.address}</p>
+            <a href="https://maps.google.com/?q={companyInfo.address}" target="_blank" rel="noopener noreferrer" class="address-link" aria-label="Get directions to Jogja Discovery office on Google Maps">
+              Get Directions
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const nameInput = document.getElementById('cf-name') as HTMLInputElement;
+  const emailInput = document.getElementById('cf-email') as HTMLInputElement;
+  const messageInput = document.getElementById('cf-message') as HTMLTextAreaElement;
+  const nameError = document.getElementById('cf-name-error')!;
+  const emailError = document.getElementById('cf-email-error')!;
+  const messageError = document.getElementById('cf-message-error')!;
+  const statusBanner = document.getElementById('status-banner')!;
+  const statusText = document.getElementById('status-text')!;
+  const statusClose = document.getElementById('status-close')!;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  function validate() {
+    let valid = true;
+    nameError.textContent = '';
+    emailError.textContent = '';
+    messageError.textContent = '';
+    nameInput.classList.remove('error');
+    emailInput.classList.remove('error');
+    messageInput.classList.remove('error');
+
+    if (!nameInput.value.trim()) {
+      nameError.textContent = 'Full name is required.';
+      nameInput.classList.add('error');
+      valid = false;
+    }
+    if (!emailInput.value.trim()) {
+      emailError.textContent = 'Email address is required.';
+      emailInput.classList.add('error');
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+      emailError.textContent = 'Please enter a valid email address.';
+      emailInput.classList.add('error');
+      valid = false;
+    }
+    if (!messageInput.value.trim()) {
+      messageError.textContent = 'Message cannot be empty.';
+      messageInput.classList.add('error');
+      valid = false;
+    } else if (messageInput.value.trim().length < 10) {
+      messageError.textContent = 'Message must be at least 10 characters.';
+      messageInput.classList.add('error');
+      valid = false;
+    }
+    return valid;
+  }
+
+  function showStatus(type: 'success' | 'error', msg: string) {
+    statusBanner.className = `status-banner status-banner--${type}`;
+    statusText.textContent = msg;
+  }
+
+  statusClose.addEventListener('click', () => {
+    statusBanner.className = 'status-banner status-banner--hidden';
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusBanner.className = 'status-banner status-banner--hidden';
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<svg class="btn-submit__spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending...`;
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1400));
+      showStatus('success', 'Message sent successfully! We\'ll get back to you within 24 hours.');
+      form.reset();
+    } catch {
+      showStatus('error', 'Something went wrong. Please try again or contact us via WhatsApp.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<svg class="btn-submit__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`;
+    }
+  });
+
+  // Lazy load map iframe when near viewport to eliminate third-party cookie/blocking penalty on page load
+  const mapIframe = document.getElementById('map-iframe') as HTMLIFrameElement;
+  if (mapIframe) {
+    const mapObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const dataSrc = mapIframe.getAttribute('data-src');
+          if (dataSrc) {
+            mapIframe.src = dataSrc;
+            mapIframe.removeAttribute('data-src');
+          }
+          mapObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '200px' });
+    mapObs.observe(mapIframe);
+  }
+
+  // Reveal
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    obs.observe(contactSection);
+  }
+</script>
+
+<style>
+.contact-section {
+  --green: #2D5016;
+  --brown: #8B7355;
+  --sand: #D4A574;
+  --bg: #FAFAFA;
+  --card: #FFFFFF;
+  --border: #E8E5E0;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  padding: var(--space-12, 96px) 0 var(--space-16, 128px);
+  background: var(--bg);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.contact-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+.contact-header {
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+/* Form Card */
+.form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.contact-form { padding: 36px 36px 40px; }
+
+.contact-form__header { margin-bottom: 28px; }
+
+.contact-form__title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.contact-form__subtitle {
+  font-size: 0.875rem;
+  color: var(--brown);
+  line-height: 1.6;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 560px) {
+  .form-row { grid-template-columns: 1fr 1fr; }
+}
+
+.input-group { margin-bottom: 16px; }
+
+.contact-form .input-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.required { color: #dc2626; }
+
+.contact-form .input-field {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: #FAFAFA;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9375rem;
+  color: #1A1A1A;
+  outline: none;
+  transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease), background 200ms;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.contact-form .input-field::placeholder { color: #9A9A9A; }
+
+.contact-form .input-field:focus {
+  border-color: var(--green);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(45,80,22,0.1);
+}
+
+.contact-form .input-field.error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
+}
+
+.input-field--select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B7355' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+textarea.input-field { resize: vertical; min-height: 120px; }
+
+.field-error {
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: 5px;
+  min-height: 1em;
+}
+
+/* Status Banner */
+.status-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.status-banner--hidden { display: none; }
+
+.status-banner--success {
+  background: rgba(45,80,22,0.08);
+  border: 1px solid rgba(45,80,22,0.2);
+  color: var(--green);
+}
+
+.status-banner--error {
+  background: rgba(220,38,38,0.06);
+  border: 1px solid rgba(220,38,38,0.2);
+  color: #dc2626;
+}
+
+.status-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+.status-close {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.status-close:hover { opacity: 1; }
+.status-close svg { width: 100%; height: 100%; }
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  letter-spacing: 0.01em;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), opacity 0.2s;
+  box-shadow: 0 4px 20px rgba(45,80,22,0.3);
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(45,80,22,0.4);
+}
+
+.btn-submit:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.btn-submit__spinner {
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.privacy-note {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: #9A9A9A;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.privacy-link {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.privacy-link:hover { color: var(--brown); }
+
+/* Info Row */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (max-width: 560px) { .info-row { grid-template-columns: 1fr; } }
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.info-card:hover {
+  border-color: rgba(45,80,22,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+.info-card--wa:hover { border-color: #25D366; }
+
+.info-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(45,80,22,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.info-card--wa .info-card__icon { background: rgba(37,211,102,0.1); color: #25D366; }
+
+.info-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+  margin: 0 0 2px;
+}
+
+.info-card__value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--green);
+  margin: 0;
+}
+
+/* Map Card */
+.map-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  height: 340px;
+  background: var(--card);
+}
+
+.map-card iframe { width: 100%; height: 100%; }
+
+/* Hours Card */
+.hours-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.hours-card__title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.125rem;
+  color: var(--green);
+  margin: 0 0 16px;
+}
+
+.hours-grid { display: flex; flex-direction: column; gap: 10px; }
+
+.hours-item {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hours-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+.hours-day {
+  font-size: 0.875rem;
+  color: var(--brown);
+}
+
+.hours-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--green);
+}
+
+.hours-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--sand);
+}
+
+/* Address Card */
+.address-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-top: 16px;
+}
+
+.address-pin {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(45,80,22,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.address-text {
+  font-size: 0.875rem;
+  color: #1A1A1A;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+
+.address-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: none;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.address-link:hover { color: var(--brown); gap: 10px; }
+
+@media (max-width: 640px) {
+  .contact-form { padding: 28px 24px 32px; }
+  .map-card { height: 260px; }
+}
+</style>

@@ -1,0 +1,442 @@
+---
+const stats = [
+  { id: 'years',     value: 8,     suffix: '+', label: 'Years of Experience' },
+  { id: 'travelers', value: 5000,  suffix: '+', label: 'Happy Travelers' },
+  { id: 'tours',     value: 150,   suffix: '+', label: 'Tour Packages' },
+  { id: 'places',    value: 34,    suffix: '+', label: 'Destinations' },
+];
+---
+
+<section id="about" class="about" aria-label="About Jogja Discovery Tour Guide Service">
+  <div class="about__inner">
+    <div class="bento">
+      <!-- Card 1: Company Story (large) -->
+      <article class="bento__card bento__card--story" data-reveal>
+        <div class="story">
+          <p class="story__eyebrow">
+            <svg class="story__eyebrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/>
+            </svg>
+            About Us
+          </p>
+          <h2 class="story__heading">Guiding Travelers Through Yogyakarta Since 2016</h2>
+          <p class="story__body">
+            Jogja Discovery was born from a deep love for Yogyakarta's rich cultural heritage and a passion for sharing its hidden wonders with the world. As a premier licensed tour guide service in Yogyakarta, we have guided thousands of travelers from every corner of the globe through ancient temples, vibrant markets, and breathtaking landscapes.
+          </p>
+          <p class="story__body">
+            Every tour we craft goes through meticulous planning &mdash; ensuring authentic experiences, knowledgeable local guides, and seamless logistics. Backed by a team of certified local experts and a vibrant community of travel enthusiasts, Jogja Discovery isn't just a tour service — it's your trusted companion in every Yogyakarta travel adventure.
+          </p>
+          <a href="#contact" class="story__link" aria-label="Contact licensed tour guide Yogyakarta">
+            Learn More
+            <svg class="story__link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 2: Animated Stats Counter -->
+      <div class="bento__card bento__card--stats" data-reveal>
+        <div class="stats-grid">
+          {stats.map((stat, i) => (
+            <div
+              class="stat"
+              data-stat-target={stat.value}
+              data-stat-index={i}
+              style={`transition-delay: ${i * 100}ms`}
+            >
+              <div class="stat__icon">
+                <svg class="stat__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  {stat.id === 'years' && <><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></>}
+                  {stat.id === 'travelers' && <><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>}
+                  {stat.id === 'tours' && <><path d="m6 2 1 5h6L14 7l1 5H9l1-5L9 2z"/><path d="M6 12H4a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2h-2"/></>}
+                  {stat.id === 'places' && <><path d="M3 15h18"/><path d="M3 11h18"/><path d="M3 7h18"/><path d="M3 19h18"/></>}
+                </svg>
+              </div>
+              <div class="stat__value">
+                <span class="stat__number" data-count="0">0</span>
+                <span class="stat__suffix">{stat.suffix}</span>
+              </div>
+              <p class="stat__label">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Card 3: Large decorative image -->
+      <div class="bento__card bento__card--image" data-reveal>
+        <div class="image-card">
+          <img
+            src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fm=webp&fit=crop&w=600&q=70"
+            alt="Tourists exploring ancient temple ruins in Yogyakarta with local tour guide"
+            class="image-card__img"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+          <div class="image-card__badge">
+            <svg class="image-card__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="3 11 22 2 13 21 11 13 3 11" fill="currentColor" stroke="none"/>
+            </svg>
+            Explore Without Limits
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Mission statement quote -->
+      <div class="bento__card bento__card--quote" data-reveal>
+        <div class="quote">
+          <svg class="quote__mark" viewBox="0 0 40 30" fill="none" aria-hidden="true">
+            <path d="M0 30V18.75C0 8.125 6.25 2.5 18.75 0L20 2.5C13.125 4.375 8.75 8.75 8.125 15H15V30H0ZM22.5 30V18.75C22.5 8.125 28.75 2.5 41.25 0L42.5 2.5C35.625 4.375 31.25 8.75 30.625 15H37.5V30H22.5Z" fill="#D4A574" opacity="0.4"/>
+          </svg>
+          <blockquote class="quote__text">
+            Travel is not just about seeing new places &mdash; it's about understanding different cultures, connecting with local communities, and discovering the stories that make Yogyakarta truly extraordinary.
+          </blockquote>
+          <cite class="quote__cite">Jogja Discovery Philosophy</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Reveal + Counter animation
+  const aboutSection = document.getElementById('about');
+  const cards = aboutSection?.querySelectorAll('[data-reveal]');
+  const statsCard = aboutSection?.querySelector('.bento__card--stats');
+  let countersStarted = false;
+
+  function easeOutExpo(t: number) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function animateCount(el: Element, target: number) {
+    const numEl = el.querySelector('.stat__number') as HTMLElement;
+    if (!numEl) return;
+    const duration = 1800;
+    const start = performance.now();
+    function step(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      numEl.textContent = String(Math.round(easeOutExpo(progress) * target));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        if (entry.target === statsCard && !countersStarted) {
+          countersStarted = true;
+          const statEls = entry.target.querySelectorAll('.stat');
+          statEls.forEach(stat => {
+            stat.classList.add('stat--visible');
+            const target = parseInt(stat.getAttribute('data-stat-target') || '0');
+            animateCount(stat, target);
+          });
+        }
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards?.forEach(card => observer.observe(card));
+</script>
+
+<style>
+.about {
+  --green:   #2D5016;
+  --brown:   #8B7355;
+  --sand:    #D4A574;
+  --bg:      #FAFAFA;
+  --card:    #FFFFFF;
+  --text:    #1A1A1A;
+  --muted:   #6B6B6B;
+  --border:  #E8E5E0;
+  --ease:    cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --radius:  16px;
+  --radius-lg: 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 100px 24px 120px;
+  background: var(--bg);
+}
+
+.about__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+.bento__card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.bento__card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bento__card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+}
+
+.bento__card--story { grid-column: span 7; grid-row: span 2; }
+.bento__card--stats { grid-column: span 5; grid-row: span 1; }
+.bento__card--image { grid-column: span 5; grid-row: span 1; }
+.bento__card--quote { grid-column: span 7; grid-row: span 1; }
+
+/* Story Card */
+.story {
+  padding: 48px 48px 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.story__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.story__eyebrow-icon { width: 16px; height: 16px; stroke: var(--green); }
+
+.story__heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+}
+
+.story__body {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0 0 16px;
+}
+
+.story__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: none;
+  transition: gap 0.25s var(--ease), color 0.25s;
+}
+
+.story__link:hover { gap: 12px; color: var(--brown); }
+
+.story__link-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease);
+}
+
+.story__link:hover .story__link-arrow { transform: translateX(4px); }
+
+/* Stats Card */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 100%;
+  min-height: 240px;
+}
+
+.stat {
+  padding: 28px 24px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), box-shadow 0.3s;
+}
+
+.stat:nth-child(2n) { border-right: none; }
+.stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+.stat--visible { opacity: 1; transform: translateY(0); }
+.stat:hover { background: rgba(212,165,116,0.05); }
+
+.stat__icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(45,80,22,0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat__icon-svg { width: 20px; height: 20px; stroke: var(--green); }
+
+.stat__value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+}
+
+.stat__number {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.stat__suffix {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--sand);
+}
+
+.stat__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Image Card */
+.image-card {
+  position: relative;
+  height: 100%;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.image-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.bento__card--image:hover .image-card__img { transform: scale(1.06); }
+
+.image-card__badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(45,80,22,0.88);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.image-card__badge-icon { width: 14px; height: 14px; fill: var(--sand); stroke: none; }
+
+/* Quote Card */
+.quote {
+  padding: 40px 48px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.quote__mark {
+  position: absolute;
+  top: 28px;
+  left: 36px;
+  width: 44px;
+  height: auto;
+  opacity: 0.6;
+}
+
+.quote__text {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  margin: 0 0 24px;
+  padding-left: 52px;
+}
+
+.quote__cite {
+  padding-left: 52px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--sand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .bento__card--story  { grid-column: span 12; grid-row: span 1; }
+  .bento__card--stats { grid-column: span 6;  grid-row: span 1; }
+  .bento__card--image { grid-column: span 6;  grid-row: span 1; }
+  .bento__card--quote { grid-column: span 12; grid-row: span 1; }
+}
+
+@media (max-width: 768px) {
+  .about { padding: 72px 16px 80px; }
+  .bento { gap: 16px; }
+
+  .bento__card--story,
+  .bento__card--stats,
+  .bento__card--image,
+  .bento__card--quote { grid-column: span 12; grid-row: span 1; }
+
+  .story { padding: 32px 28px; }
+  .quote { padding: 32px 28px; }
+  .quote__text, .quote__cite { padding-left: 0; }
+  .quote__mark { top: 20px; left: 20px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); min-height: auto; }
+  .stat { padding: 20px 16px; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat__number { font-size: 1.5rem; }
+}
+</style>

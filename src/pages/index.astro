@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
+import DestinationsSection from '../components/sections/DestinationsSection.astro';
+import ToursSection from '../components/sections/ToursSection.astro';
+import FeaturesSection from '../components/sections/FeaturesSection.astro';
+import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import FAQSection from '../components/sections/FAQSection.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+---
+
+<BaseLayout title="Jogja Discovery — Premier Yogyakarta Tour Guide Service">
+  <Header />
+  <main id="main-content">
+    <HeroSection />
+    <AboutSection />
+    <DestinationsSection />
+    <ToursSection />
+    <FeaturesSection />
+    <TestimonialsSection />
+    <FAQSection />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

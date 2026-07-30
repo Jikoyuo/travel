@@ -1,0 +1,361 @@
+---
+const navLinks = [
+  { href: '#about', label: 'About', id: 'about' },
+  { href: '#destinations', label: 'Destinations', id: 'destinations' },
+  { href: '#tours', label: 'Tours', id: 'tours' },
+  { href: '#features', label: 'Why Us', id: 'features' },
+  { href: '#testimonials', label: 'Reviews', id: 'testimonials' },
+  { href: '#contact', label: 'Contact', id: 'contact' },
+];
+---
+
+<header class="app-header" id="app-header">
+  <div class="app-header__inner">
+    <!-- Logo -->
+    <a href="/#hero" class="app-header__logo" aria-label="Jogja Discovery — Tour Guide Yogyakarta Home">
+      <svg class="app-header__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M16 3L3 28H29L16 3Z" fill="currentColor" opacity="0.9"/>
+        <path d="M16 10L8 24H24L16 10Z" fill="currentColor" opacity="0.6"/>
+        <path d="M16 16L12 22H20L16 16Z" fill="currentColor"/>
+      </svg>
+      <span class="app-header__logo-text">Jogja Discovery</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="app-header__nav" aria-label="Main navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="app-header__nav-link"
+          data-section={link.id}
+          aria-label={`Go to ${link.label} section`}
+        >{link.label}</a>
+      ))}
+    </nav>
+
+    <!-- Desktop CTA -->
+    <a href="#contact" class="app-header__cta" aria-label="Book a Tour Guide in Yogyakarta Now">Book Now</a>
+
+    <!-- Mobile Hamburger -->
+    <button
+      class="app-header__hamburger"
+      id="hamburger-btn"
+      aria-expanded="false"
+      aria-label="Toggle navigation menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <nav class="app-header__drawer" id="mobile-drawer" aria-label="Mobile navigation" hidden>
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class="app-header__drawer-link"
+        data-section={link.id}
+        aria-label={`Go to ${link.label} section`}
+      >{link.label}</a>
+    ))}
+    <a href="#contact" class="app-header__drawer-cta" aria-label="Book a Tour Guide in Yogyakarta Now">Book Now</a>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('app-header');
+  const hamburger = document.getElementById('hamburger-btn');
+  const drawer = document.getElementById('mobile-drawer');
+  let isScrolled = false;
+  let mobileOpen = false;
+
+  function updateHeaderState() {
+    const scrolled = window.scrollY > 60;
+    if (scrolled !== isScrolled) {
+      isScrolled = scrolled;
+      if (isScrolled || mobileOpen) {
+        header?.classList.add('app-header--scrolled');
+      } else {
+        header?.classList.remove('app-header--scrolled');
+      }
+    }
+  }
+
+  function toggleMobile() {
+    mobileOpen = !mobileOpen;
+    hamburger?.classList.toggle('is-open', mobileOpen);
+    hamburger?.setAttribute('aria-expanded', String(mobileOpen));
+    if (drawer) {
+      drawer.hidden = !mobileOpen;
+    }
+    if (mobileOpen || isScrolled) {
+      header?.classList.add('app-header--scrolled');
+    } else {
+      header?.classList.remove('app-header--scrolled');
+    }
+  }
+
+  function closeMobile() {
+    if (mobileOpen) {
+      mobileOpen = false;
+      hamburger?.classList.remove('is-open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      if (drawer) drawer.hidden = true;
+      if (!isScrolled) header?.classList.remove('app-header--scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+  hamburger?.addEventListener('click', toggleMobile);
+
+  // Close drawer on link click
+  drawer?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMobile);
+  });
+
+  // Active section tracking
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          document.querySelectorAll('.app-header__nav-link').forEach(link => {
+            link.classList.toggle('is-active', link.getAttribute('data-section') === id);
+          });
+        }
+      });
+    },
+    { rootMargin: '-64px 0px -65% 0px', threshold: 0 }
+  );
+
+  document.querySelectorAll('.app-header__nav-link').forEach(link => {
+    const id = link.getAttribute('data-section');
+    if (id) {
+      const el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    }
+  });
+</script>
+
+<style>
+.app-header {
+  --green:  #2D5016;
+  --brown:  #8B7355;
+  --sand:   #D4A574;
+  --bg:     #FAFAFA;
+  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background 0.4s var(--ease), backdrop-filter 0.4s var(--ease),
+              box-shadow 0.4s var(--ease);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.app-header--scrolled {
+  background: rgba(250, 250, 250, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+}
+
+/* Inner row */
+.app-header__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Logo */
+.app-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+
+.app-header--scrolled .app-header__logo { color: var(--green); }
+
+.app-header__logo-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.app-header__logo-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+/* Desktop nav */
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}
+
+.app-header__nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.25s;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.app-header__nav-link::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -4px 0;
+  height: 1.5px;
+  background: var(--sand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+
+.app-header__nav-link:hover::after,
+.app-header__nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.app-header--scrolled .app-header__nav-link { color: rgba(26,26,26,0.7); }
+.app-header--scrolled .app-header__nav-link:hover,
+.app-header--scrolled .app-header__nav-link.is-active { color: var(--green); }
+
+/* Active state color when not scrolled (transparent header over hero) */
+.app-header__nav-link.is-active { color: #fff; }
+
+/* CTA */
+.app-header__cta {
+  flex-shrink: 0;
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.app-header__cta:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(45,80,22,0.35);
+}
+
+.app-header__cta:active { transform: scale(0.98); }
+
+/* Hamburger */
+.app-header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.app-header__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.3s, background 0.3s;
+  transform-origin: center;
+}
+
+.app-header--scrolled .app-header__hamburger span { background: var(--green); }
+
+.app-header__hamburger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.app-header__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.app-header__hamburger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Mobile Drawer */
+.app-header__drawer {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid #E8E5E0;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  z-index: 99;
+  animation: drawerIn 0.25s var(--ease);
+}
+
+.app-header__drawer[hidden] {
+  display: none;
+}
+
+@keyframes drawerIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.app-header__drawer-link {
+  display: block;
+  padding: 11px 16px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.app-header__drawer-link:hover {
+  background: rgba(45,80,22,0.06);
+  color: var(--green);
+}
+
+.app-header__drawer-cta {
+  display: block;
+  margin-top: 12px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .app-header__nav,
+  .app-header__cta { display: none; }
+  .app-header__hamburger { display: flex; }
+  .app-header__inner { gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .app-header__logo-text { font-size: 1rem; }
+  .app-header__inner { height: 64px; }
+  .app-header__drawer { top: 64px; }
+}
+</style>
